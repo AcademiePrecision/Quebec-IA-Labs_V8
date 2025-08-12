@@ -1,0 +1,28 @@
+{
+  "name": "marcel-v8-ultimate-replit",
+  "version": "8.0.0",
+  "description": "🧠 Marcel V8.0 Ultimate - Quebec IA Labs Production avec Claude",
+  "main": "replit-server.js",
+  "scripts": {
+    "start": "node replit-server.js",
+    "dev": "node replit-server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.0",
+    "openai": "^4.28.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.0.1",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "replit": {
+    "entrypoint": "replit-server.js",
+    "language": "nodejs",
+    "run": "node replit-server.js"
+  }
+}
