@@ -6,15 +6,61 @@
 // 📞 PROFILS DE TÉLÉPHONE (NOUVEAU!)
 // Un numéro peut être partagé par plusieurs personnes
 const phoneProfiles = {
+  "+14189510161": {
+    type: "test_clients", // Clients de test pour Marcel V8.1
+    mainContact: {
+      id: "client_001",
+      name: "François Moreau",
+      salon: "Salon Tony",
+      lastVisit: "2024-08-08",
+      preferences: {
+        barbier: "Marco",
+        services: ["coupe", "barbe"],
+        timePreference: "matin",
+        dayPreference: "mardi"
+      },
+    },
+    sharedWith: [
+      {
+        id: "client_002",
+        name: "Marie-Claude Gagnon",
+        relation: "cliente régulière",
+        salon: "Salon Gustave",
+        lastVisit: "2024-08-09",
+        preferences: {
+          barbier: "Jessica",
+          services: ["coupe", "coloration"],
+          timePreference: "après-midi",
+          dayPreference: "jeudi"
+        },
+      },
+      {
+        id: "client_003",
+        name: "Kevin Tremblay",
+        relation: "jeune créatif", 
+        salon: "Independent Barber",
+        lastVisit: "2024-08-07",
+        preferences: {
+          barbier: "Alex",
+          services: ["coupe moderne", "design"],
+          timePreference: "fin-après-midi",
+          dayPreference: "vendredi"
+        },
+      },
+    ],
+    verificationRequired: true,
+    notes: "Numéro test Marcel V8.1 - 3 clients différents, toujours vérifier identité",
+  },
+
   "+15145551234": {
     type: "family", // family, office, personal, shared
     mainContact: {
-      id: "client_001",
+      id: "client_legacy_001",
       name: "Jean Tremblay",
     },
     sharedWith: [
       {
-        id: "client_004",
+        id: "client_legacy_004",
         name: "Sophie Tremblay",
         relation: "épouse",
         lastVisit: "2024-06-10",
@@ -24,7 +70,7 @@ const phoneProfiles = {
         },
       },
       {
-        id: "client_005",
+        id: "client_legacy_005",
         name: "Marc Tremblay",
         relation: "fils",
         age: 17,
