@@ -5,7 +5,16 @@
   "main": "replit-server.js",
   "scripts": {
     "start": "node replit-server.js",
-    "dev": "node replit-server.js"
+    "dev": "node replit-server.js",
+    
+    "sync": "node ../scripts/sync-to-github.js && echo '🚀 Sync completed: Local → GitHub → Replit Dev'",
+    "deploy:prod": "node ../scripts/deploy-to-replit.js prod",
+    "deploy:dev": "node ../scripts/deploy-to-replit.js dev",
+    "monitor": "node ../scripts/monitor-production.js",
+    "rollback:prod": "node ../scripts/deploy-to-replit.js rollback-prod",
+    
+    "health": "node ../scripts/monitor-production.js --quick",
+    "test:services": "echo 'Testing services...' && npm run health"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.0",
