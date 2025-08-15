@@ -1,0 +1,27 @@
+# Ignore tout ce qui peut causer des conflits React
+node_modules/
+*.backup
+*.old
+App.tsx
+src/
+android/
+ios/
+web/
+assets/images/
+.expo/
+expo.json
+babel.config.js
+metro.config.js
+tailwind.config.js
+patches/
+
+# Garder seulement Marcel
+!quebec-ia-labs-fresh/
+!quebec-ia-labs-fresh/**
+
+# Ignorer les logs
+*.log
+.DS_Store
+.env.local
+dist/
+build/

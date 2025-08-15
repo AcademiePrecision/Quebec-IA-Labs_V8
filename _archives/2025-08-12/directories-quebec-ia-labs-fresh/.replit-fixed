@@ -1,0 +1,11 @@
+run = "node main-fixed.js"
+entrypoint = "main-fixed.js"
+
+[nix]
+channel = "stable-22_11"
+
+[nix.deps]
+pkgs = ["nodejs-18_x", "nodePackages.npm"]
+
+[deployment]
+run = ["node", "main-fixed.js"]

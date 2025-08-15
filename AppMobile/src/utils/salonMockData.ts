@@ -1,0 +1,272 @@
+import { 
+  SalonDashboardData, 
+  SalonAnalytics, 
+  FormateurPerformance, 
+  ContentSubmission, 
+  ContentPerformance,
+  StudentEngagement,
+  RevenueBreakdown,
+  RoyaltyDistribution
+} from '../types/salon';
+
+const generateSalonAnalytics = (period: 'week' | 'month' | 'quarter' | 'year'): SalonAnalytics => {
+  const multiplier = period === 'week' ? 1 : period === 'month' ? 4 : period === 'quarter' ? 12 : 48;
+  
+  return {
+    period,
+    totalRevenue: 8500 * multiplier + Math.random() * 2000,
+    workshopRevenue: 4200 * multiplier + Math.random() * 1000,
+    contentRoyalties: 2800 * multiplier + Math.random() * 800,
+    spaceRental: 1200 * multiplier + Math.random() * 400,
+    partnershipBonus: 300 * multiplier + Math.random() * 100,
+    totalViewingMinutes: 12500 * multiplier + Math.random() * 3000,
+    activeStudents: 45 + Math.floor(Math.random() * 15),
+    growth: (Math.random() - 0.4) * 25, // -10% to +15%
+  };
+};
+
+const mockFormateurs: FormateurPerformance[] = [
+  {
+    id: 'formateur1',
+    name: 'Marc Dubois',
+    specialties: ['Barbier', 'Coupe moderne'],
+    totalRevenue: 15670,
+    contentCount: 8,
+    averageRating: 4.8,
+    totalViews: 2340,
+    viewingMinutes: 18750,
+    royaltiesEarned: 9400,
+    studentsCount: 156,
+    monthlyGrowth: 18.5,
+    lastActive: '2024-12-07T14:30:00Z',
+    status: 'active',
+  },
+  {
+    id: 'formateur2',
+    name: 'Sophie Martin',
+    specialties: ['Coiffure créative', 'Coloration'],
+    totalRevenue: 12340,
+    contentCount: 6,
+    averageRating: 4.6,
+    totalViews: 1890,
+    viewingMinutes: 14250,
+    royaltiesEarned: 7400,
+    studentsCount: 98,
+    monthlyGrowth: 12.3,
+    lastActive: '2024-12-06T16:45:00Z',
+    status: 'active',
+  },
+  {
+    id: 'formateur3',
+    name: 'Alexandre Tremblay',
+    specialties: ['Barbier traditionnel', 'Rasage'],
+    totalRevenue: 9800,
+    contentCount: 4,
+    averageRating: 4.9,
+    totalViews: 1450,
+    viewingMinutes: 11600,
+    royaltiesEarned: 5880,
+    studentsCount: 87,
+    monthlyGrowth: -5.2,
+    lastActive: '2024-12-05T09:15:00Z',
+    status: 'active',
+  },
+  {
+    id: 'formateur4',
+    name: 'Marie-Claire Bouchard',
+    specialties: ['Techniques avancées'],
+    totalRevenue: 3400,
+    contentCount: 2,
+    averageRating: 4.3,
+    totalViews: 560,
+    viewingMinutes: 4200,
+    royaltiesEarned: 2040,
+    studentsCount: 34,
+    monthlyGrowth: 0,
+    lastActive: '2024-11-28T11:20:00Z',
+    status: 'pending',
+  },
+];
+
+const mockPendingContent: ContentSubmission[] = [
+  {
+    id: 'content1',
+    title: 'Techniques de dégradé avancé pour barbiers',
+    description: 'Formation complète sur les techniques modernes de dégradé avec outils professionnels',
+    formateurId: 'formateur1',
+    formateurName: 'Marc Dubois',
+    category: 'barbier',
+    level: 'avance',
+    duration: 120,
+    status: 'pending',
+    submittedAt: '2024-12-06T14:30:00Z',
+    expectedPrice: 199,
+    estimatedRoyalty: 119.40, // 60% salon
+  },
+  {
+    id: 'content2',
+    title: 'Coloration créative - Nouvelles tendances',
+    description: 'Exploration des dernières techniques de coloration créative',
+    formateurId: 'formateur2',
+    formateurName: 'Sophie Martin',
+    category: 'coiffure',
+    level: 'intermediaire',
+    duration: 90,
+    status: 'revision_needed',
+    submittedAt: '2024-12-04T10:15:00Z',
+    reviewedAt: '2024-12-05T16:20:00Z',
+    reviewComments: 'Excellent contenu! Merci d\'ajouter une section sur les précautions de sécurité avec les produits chimiques.',
+    expectedPrice: 149,
+    estimatedRoyalty: 89.40,
+  },
+  {
+    id: 'content3',
+    title: 'Rasage traditionnel à l\'ancienne',
+    description: 'Art du rasage traditionnel avec lames droites et techniques classiques',
+    formateurId: 'formateur3',
+    formateurName: 'Alexandre Tremblay',
+    category: 'barbier',
+    level: 'avance',
+    duration: 150,
+    status: 'pending',
+    submittedAt: '2024-12-07T09:45:00Z',
+    expectedPrice: 249,
+    estimatedRoyalty: 149.40,
+  },
+];
+
+const mockContentPerformance: ContentPerformance[] = [
+  {
+    id: 'perf1',
+    title: 'Techniques de barbe professionnelles',
+    formateurName: 'Marc Dubois',
+    totalViews: 890,
+    totalMinutes: 11250,
+    averageRating: 4.8,
+    revenue: 13350,
+    salonRoyalty: 8010,
+    formateurRoyalty: 5340,
+    enrollments: 89,
+    completionRate: 78.5,
+    lastViewed: '2024-12-07T16:30:00Z',
+  },
+  {
+    id: 'perf2',
+    title: 'Coupe moderne pour hommes',
+    formateurName: 'Sophie Martin',
+    totalViews: 670,
+    totalMinutes: 8040,
+    averageRating: 4.6,
+    revenue: 10050,
+    salonRoyalty: 6030,
+    formateurRoyalty: 4020,
+    enrollments: 67,
+    completionRate: 82.1,
+    lastViewed: '2024-12-07T15:45:00Z',
+  },
+];
+
+const mockStudents: StudentEngagement[] = [
+  {
+    id: 'student1',
+    name: 'Jean Dupont',
+    email: 'jean.dupont@email.com',
+    totalMinutesWatched: 450,
+    coursesEnrolled: 3,
+    coursesCompleted: 2,
+    averageRating: 4.7,
+    lastActivity: '2024-12-07T14:20:00Z',
+    monthlySpending: 348,
+    favoriteFormateur: 'Marc Dubois',
+    preferredCategories: ['barbier', 'techniques avancées'],
+  },
+  {
+    id: 'student2',
+    name: 'Marie Lavoie',
+    email: 'marie.lavoie@email.com',
+    totalMinutesWatched: 320,
+    coursesEnrolled: 2,
+    coursesCompleted: 1,
+    averageRating: 4.9,
+    lastActivity: '2024-12-07T11:15:00Z',
+    monthlySpending: 199,
+    favoriteFormateur: 'Sophie Martin',
+    preferredCategories: ['coiffure', 'coloration'],
+  },
+];
+
+const mockRevenueBreakdown: RevenueBreakdown[] = [
+  {
+    source: 'Royautés Contenu',
+    amount: 11200,
+    percentage: 42.5,
+    growth: 15.8,
+    description: 'Revenus des formations vidéo',
+  },
+  {
+    source: 'Ateliers Présentiel',
+    amount: 8900,
+    percentage: 33.8,
+    growth: 8.2,
+    description: 'Revenus des ateliers dans le salon',
+  },
+  {
+    source: 'Location Espaces',
+    amount: 4800,
+    percentage: 18.2,
+    growth: -2.1,
+    description: 'Location d\'espaces de formation',
+  },
+  {
+    source: 'Bonus Partenariat',
+    amount: 1450,
+    percentage: 5.5,
+    growth: 22.3,
+    description: 'Bonus de performance partenaire',
+  },
+];
+
+const mockRoyaltyDistributions: RoyaltyDistribution[] = [
+  {
+    contentId: 'perf1',
+    contentTitle: 'Techniques de barbe professionnelles',
+    formateurId: 'formateur1',
+    formateurName: 'Marc Dubois',
+    totalMinutes: 2250,
+    totalRevenue: 2670,
+    salonShare: 1602, // 60%
+    formateurShare: 1068, // 40%
+    distributionDate: '2024-12-01T00:00:00Z',
+    period: 'Novembre 2024',
+  },
+  {
+    contentId: 'perf2',
+    contentTitle: 'Coupe moderne pour hommes',
+    formateurId: 'formateur2',
+    formateurName: 'Sophie Martin',
+    totalMinutes: 1680,
+    totalRevenue: 2010,
+    salonShare: 1206,
+    formateurShare: 804,
+    distributionDate: '2024-12-01T00:00:00Z',
+    period: 'Novembre 2024',
+  },
+];
+
+export const mockSalonDashboardData: SalonDashboardData = {
+  analytics: {
+    week: generateSalonAnalytics('week'),
+    month: generateSalonAnalytics('month'),
+    quarter: generateSalonAnalytics('quarter'),
+    year: generateSalonAnalytics('year'),
+  },
+  formateurs: mockFormateurs,
+  pendingContent: mockPendingContent,
+  contentPerformance: mockContentPerformance,
+  students: mockStudents,
+  revenueBreakdown: mockRevenueBreakdown,
+  royaltyDistributions: mockRoyaltyDistributions,
+  totalViewingMinutes: 45680,
+  activeFormateurs: 3,
+  pendingApprovals: 3,
+};

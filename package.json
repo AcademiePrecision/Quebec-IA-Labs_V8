@@ -1,0 +1,55 @@
+{
+  "name": "savageco-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "🚀 SavageCo - Plateforme EdTech et Marcel AI - Architecture Optimale",
+  "main": "index.js",
+  "scripts": {
+    "dev:app": "cd AppMobile && set PORT=3000 && npm run start",
+    "dev:marcel": "cd Quebec-IA-Labs-V8-Replit_Dev_20250812 && set PORT=3001 && npm run dev",
+    "dev:all": "start npm run dev:marcel && start npm run dev:app",
+    "build:app": "cd AppMobile && npm run build:android",
+    "test:app": "cd AppMobile && npm test",
+    "test:marcel": "cd Quebec-IA-Labs-V8-Replit_Dev_20250812 && npm test",
+    "test:all": "npm run test:marcel && npm run test:app",
+    "lint:all": "npm run lint:app && npm run lint:marcel",
+    "lint:app": "cd AppMobile && npm run lint",
+    "lint:marcel": "echo 'Marcel lint not configured yet'",
+    "install:all": "npm install && npm run install:app && npm run install:shared",
+    "install:app": "cd AppMobile && npm install",
+    "install:shared": "cd shared && npm install",
+    "sync": "node scripts/sync-to-github.js",
+    "deploy:prod": "node scripts/deploy-to-replit.js prod",
+    "setup": "node scripts/setup-architecture.js",
+    "cleanup": "node scripts/cleanup-phase3-final.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.0",
+    "openai": "^4.28.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "workspaces": [
+    "AppMobile",
+    "shared",
+    "Quebec-IA-Labs-V8-Replit_Dev_20250812"
+  ],
+  "keywords": [
+    "savageco",
+    "marcel",
+    "ai",
+    "education",
+    "react-native",
+    "quebec"
+  ],
+  "author": "Académie Précision - Franky",
+  "license": "Private",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AcademiePrecision/Quebec-IA-Labs_V8.git"
+  }
+}

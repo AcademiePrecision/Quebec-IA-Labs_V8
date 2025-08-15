@@ -1,0 +1,17 @@
+node_modules/
+.env
+.DS_Store
+*.log
+dist/
+build/
+
+# Ignore React Native app files that might cause conflicts
+src/
+android/
+ios/
+web/
+App.tsx
+App.js
+metro.config.js
+babel.config.js
+expo.json

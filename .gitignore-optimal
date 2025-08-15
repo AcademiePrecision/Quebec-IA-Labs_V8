@@ -1,0 +1,205 @@
+# 🔒 SAVAGECO GITIGNORE OPTIMISÉ
+# Sécurité maximale et performance
+
+# ===================================
+# 🔐 FICHIERS SENSIBLES (CRITIQUE!)
+# ===================================
+.env*
+!.env.example
+*.key
+*.pem
+secrets.json
+config/production.json
+.vscode/settings.json
+
+# Clés API et tokens
+**/ANTHROPIC_API_KEY*
+**/OPENAI_API_KEY*
+**/STRIPE_SECRET*
+**/SUPABASE_SERVICE*
+**/TWILIO_AUTH*
+
+# ===================================
+# 📱 REACT NATIVE / EXPO
+# ===================================
+AppMobile/node_modules/
+AppMobile/.expo/
+AppMobile/dist/
+AppMobile/web-build/
+AppMobile/.expo-shared
+AppMobile/metro.cache
+
+# iOS
+AppMobile/ios/build/
+AppMobile/ios/Pods/
+AppMobile/ios/*.xcworkspace
+AppMobile/*.pbxproj
+
+# Android  
+AppMobile/android/build/
+AppMobile/android/.gradle/
+AppMobile/android/app/build/
+AppMobile/*.keystore
+AppMobile/*.jks
+
+# ===================================
+# 🤖 MARCEL AI / NODE.JS
+# ===================================
+Quebec-IA-Labs-V8-Replit_Dev_20250812/node_modules/
+shared/node_modules/
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+Marcel-Trainer-Dev/logs/
+
+# Cache
+.npm
+.cache
+.parcel-cache
+
+# ===================================
+# 🔧 OUTILS DÉVELOPPEMENT
+# ===================================
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# ESLint
+.eslintcache
+
+# Jest
+coverage/
+.nyc_output
+
+# ===================================  
+# 🖥️ SYSTÈME & ÉDITEURS
+# ===================================
+# macOS
+.DS_Store
+.AppleDouble
+
+# Windows
+Thumbs.db
+*.exe
+nul
+
+# Linux
+*~
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===================================
+# 📦 BUILDS & DIST
+# ===================================
+build/
+dist/
+out/
+.next/
+.nuxt/
+
+# Expo
+AppMobile/.expo/
+AppMobile/expo-env.d.ts
+
+# ===================================
+# 🔄 CI/CD & DEPLOY
+# ===================================
+.github/workflows/secrets/
+deploy-keys/
+*.deploy.log
+
+# ===================================
+# 📊 DONNÉES TEMPORAIRES  
+# ===================================
+tmp/
+temp/
+.tmp
+*.tmp
+*.temp
+
+# Base de données locales
+*.db
+*.sqlite
+*.sqlite3
+
+# ===================================
+# 🧪 TESTS
+# ===================================
+coverage/
+.nyc_output/
+test-results/
+screenshots/
+__snapshots__/
+
+# ===================================
+# ⚡ PERFORMANCE
+# ===================================
+# Bundler cache
+.cache/
+.parcel-cache/
+.webpack/
+
+# Package manager
+package-lock.json.backup
+yarn.lock.backup
+.pnpm-store/
+
+# ===================================
+# 🎯 SAVAGECO SPÉCIFIQUE
+# ===================================
+# Archives (déjà traitées)
+_archives/
+Marcel-Trainer-Dev/Archives/
+**/backup-*/
+
+# Captures d'écran développement
+Capture*.jpg
+Capture*.png
+Screenshot*.png
+
+# Fichiers temporaires de développement  
+consolidate-*.js
+deploy-v8-quebec*
+nul
+exclude.txt
+
+# ===================================
+# ✅ GARDER CES FICHIERS IMPORTANTS
+# ===================================
+!AppMobile/.gitkeep
+!shared/.gitkeep
+!.env.example
+!README.md
+!ARCHITECTURE.md
+!package.json
+!tsconfig.json
+
+# ===================================
+# 🚀 REPLIT SPÉCIFIQUE  
+# ===================================
+.replit
+replit.nix
+.config/
+.breakpoints
+.upm/
+
+# ===================================
+# 📱 MOBILE SPÉCIFIQUE
+# ===================================
+# React Native
+AppMobile/android/app/src/main/assets/index.android.bundle
+AppMobile/ios/main.jsbundle
+
+# Expo
+AppMobile/.expo-shared/
+
+# Metro
+AppMobile/metro.cache/
+AppMobile/.metro

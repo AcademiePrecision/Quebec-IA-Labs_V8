@@ -1,0 +1,416 @@
+{
+  "metadata": {
+    "version": "1.0.0-dev",
+    "description": "Scénarios de test Marcel Trainer - Version développement",
+    "language": "français québécois",
+    "created": "2025-08-06",
+    "total_scenarios": 25,
+    "dev_mode": true,
+    "test_categories": [
+      "salutations", "rendez_vous", "prix", "horaires", 
+      "quebec", "anti_boucles", "cas_difficiles", "validation"
+    ]
+  },
+
+  "scenarios": [
+    {
+      "id": "greeting_basic",
+      "category": "salutations",
+      "difficulty": "facile",
+      "input": "Bonjour",
+      "expected_response_contains": ["bonjour", "aider", "rendez-vous", "prix"],
+      "success_criteria": "Salue et propose les options principales",
+      "description": "Salutation basique standard",
+      "dev_notes": "Test de base pour vérifier réponse d'accueil"
+    },
+
+    {
+      "id": "greeting_quebec_1",
+      "category": "quebec",
+      "difficulty": "facile",
+      "input": "Allô, c'est-tu ouvert?",
+      "expected_response_contains": ["ouvert", "horaires", "oui", "mardi", "vendredi"],
+      "success_criteria": "Confirme ouverture et donne horaires",
+      "description": "Question québécoise typique",
+      "dev_notes": "Test reconnaissance expressions québécoises"
+    },
+
+    {
+      "id": "greeting_quebec_2",
+      "category": "quebec",
+      "difficulty": "facile",
+      "input": "Salut, j'aimerais ça savoir vos prix",
+      "expected_response_contains": ["prix", "35", "40", "55", "dollars"],
+      "success_criteria": "Liste tous les prix avec devise",
+      "description": "Demande prix avec expression québécoise",
+      "dev_notes": "Test 'j'aimerais ça' typiquement québécois"
+    },
+
+    {
+      "id": "booking_vague",
+      "category": "rendez_vous",
+      "difficulty": "moyen",
+      "input": "J'aimerais prendre un rendez-vous",
+      "expected_response_contains": ["service", "coupe", "barbe", "homme", "femme"],
+      "avoid_in_response": ["mardi", "jeudi", "14h", "16h"],
+      "success_criteria": "Demande le type de service sans mentionner dates/heures",
+      "description": "RDV vague - doit clarifier le service d'abord",
+      "dev_notes": "Test logique progressive: service → date → heure"
+    },
+
+    {
+      "id": "booking_service_specifie",
+      "category": "rendez_vous",
+      "difficulty": "facile",
+      "input": "Je veux un rdv pour une coupe homme",
+      "expected_response_contains": ["coupe homme", "date", "quand", "mardi", "jeudi"],
+      "success_criteria": "Service identifié, demande la date",
+      "description": "Service spécifié - passe à l'étape suivante",
+      "dev_notes": "Test progression logique après service défini"
+    },
+
+    {
+      "id": "booking_complet_partiel",
+      "category": "rendez_vous",
+      "difficulty": "moyen",
+      "input": "Rdv coupe et barbe mercredi après-midi",
+      "expected_response_contains": ["coupe", "barbe", "mercredi", "heure", "14h", "16h"],
+      "success_criteria": "Service+jour identifiés, demande heure précise",
+      "description": "Informations partielles - affine l'heure",
+      "dev_notes": "Test gestion informations partielles"
+    },
+
+    {
+      "id": "service_femme",
+      "category": "rendez_vous",
+      "difficulty": "facile",
+      "input": "Une coupe pour femme",
+      "expected_response_contains": ["coupe femme", "date", "disponible"],
+      "avoid_in_response": ["type", "quel service", "homme"],
+      "success_criteria": "Service femme identifié, ne redemande pas le type",
+      "description": "Service femme spécifique",
+      "dev_notes": "Test anti-boucle: ne pas redemander service connu"
+    },
+
+    {
+      "id": "service_barbe_seule",
+      "category": "rendez_vous",
+      "difficulty": "facile",
+      "input": "Juste une barbe s'il vous plaît",
+      "expected_response_contains": ["barbe", "taille", "date", "quand"],
+      "success_criteria": "Service barbe seule identifié",
+      "description": "Service barbe uniquement",
+      "dev_notes": "Test reconnaissance service spécifique"
+    },
+
+    {
+      "id": "service_coloration",
+      "category": "rendez_vous",
+      "difficulty": "moyen",
+      "input": "Coloration pour ma blonde",
+      "expected_response_contains": ["coloration", "femme", "date", "80"],
+      "success_criteria": "Service coloration + genre identifiés",
+      "description": "Service coloration avec indication genre",
+      "dev_notes": "Test reconnaissance contexte complexe"
+    },
+
+    {
+      "id": "price_coupe_simple",
+      "category": "prix",
+      "difficulty": "facile",
+      "input": "Combien ça coûte une coupe?",
+      "expected_response_contains": ["35", "dollars", "coupe homme", "rendez-vous"],
+      "success_criteria": "Prix coupe homme + proposition RDV",
+      "description": "Prix coupe basique",
+      "dev_notes": "Test réponse prix avec suivi commercial"
+    },
+
+    {
+      "id": "price_service_complet",
+      "category": "prix",
+      "difficulty": "facile",
+      "input": "Vos tarifs pour coupe et barbe?",
+      "expected_response_contains": ["55", "dollars", "coupe", "barbe"],
+      "success_criteria": "Prix service combiné correct",
+      "description": "Prix service combiné",
+      "dev_notes": "Test prix service composite"
+    },
+
+    {
+      "id": "price_coloration",
+      "category": "prix",
+      "difficulty": "moyen",
+      "input": "C'est combien une coloration?",
+      "expected_response_contains": ["80", "dollars", "partir", "coloration"],
+      "success_criteria": "Prix coloration avec mention 'à partir de'",
+      "description": "Prix service premium variable",
+      "dev_notes": "Test prix variable avec qualification"
+    },
+
+    {
+      "id": "horaires_general",
+      "category": "horaires",
+      "difficulty": "facile",
+      "input": "Vous êtes ouverts quand?",
+      "expected_response_contains": ["mardi", "vendredi", "9h", "18h", "samedi"],
+      "success_criteria": "Horaires complets avec jours et heures",
+      "description": "Demande horaires généraux",
+      "dev_notes": "Test information complète horaires"
+    },
+
+    {
+      "id": "horaires_jour_specifique",
+      "category": "horaires",
+      "difficulty": "moyen",
+      "input": "Êtes-vous ouverts dimanche?",
+      "expected_response_contains": ["fermé", "dimanche", "lundi", "mardi"],
+      "success_criteria": "Précise fermeture weekend + alternative",
+      "description": "Question jour spécifique fermé",
+      "dev_notes": "Test réponse négative avec alternative"
+    },
+
+    {
+      "id": "horaires_quebec",
+      "category": "quebec",
+      "difficulty": "moyen",
+      "input": "C'est-tu ouvert à soir?",
+      "expected_response_contains": ["soir", "18h", "fermé", "horaires"],
+      "success_criteria": "Comprend 'à soir' et explique fermeture",
+      "description": "Question horaire québécoise",
+      "dev_notes": "Test compréhension 'à soir' québécois"
+    },
+
+    {
+      "id": "anti_boucle_critique",
+      "category": "anti_boucles",
+      "difficulty": "difficile",
+      "conversation_flow": [
+        {
+          "step": 1,
+          "input": "Rendez-vous coupe homme",
+          "expected_contains": ["date", "quand"],
+          "expected_avoids": ["type", "service", "quel"]
+        },
+        {
+          "step": 2,
+          "input": "Mardi après-midi",
+          "expected_contains": ["heure", "14h", "16h"],
+          "expected_avoids": ["type", "coupe homme", "service"]
+        },
+        {
+          "step": 3,
+          "input": "Coupe homme",
+          "expected_contains": ["déjà", "sais", "heure"],
+          "expected_avoids": ["quel type", "service voulez"],
+          "critical_test": "NE DOIT PAS redemander le type de service"
+        }
+      ],
+      "success_criteria": "Marcel se souvient du service et ne le redemande pas",
+      "description": "Test anti-boucle critique - mémoire conversation",
+      "dev_notes": "TEST CRITIQUE: échec = problème majeur logique"
+    },
+
+    {
+      "id": "gestion_oui_apres_prix",
+      "category": "quebec",
+      "difficulty": "moyen",
+      "conversation_flow": [
+        {
+          "step": 1,
+          "input": "Prix coupe barbe?",
+          "expected_contains": ["55", "dollars", "rendez-vous"]
+        },
+        {
+          "step": 2,
+          "input": "Oui",
+          "expected_contains": ["service", "coupe", "barbe"],
+          "context_note": "Oui après prix = veut RDV pour ce service"
+        }
+      ],
+      "success_criteria": "Comprend que 'oui' = accepte le prix et veut RDV",
+      "description": "Gestion contexte 'oui' après prix",
+      "dev_notes": "Test intelligence contextuelle"
+    },
+
+    {
+      "id": "client_confus",
+      "category": "cas_difficiles",
+      "difficulty": "difficile",
+      "input": "Euh... ben... j'sais pas trop... peut-être un truc pour mes cheveux?",
+      "expected_response_contains": ["service", "coupe", "homme", "femme", "clarifier"],
+      "success_criteria": "Guide le client confus vers clarification",
+      "description": "Client indécis - doit guider avec patience",
+      "dev_notes": "Test gestion client hésitant"
+    },
+
+    {
+      "id": "accent_fort_quebec",
+      "category": "quebec",
+      "difficulty": "difficile",
+      "input": "Moi j'veux d'quoi de bin beau pour ma tête là",
+      "expected_response_contains": ["service", "coupe", "type", "homme", "femme"],
+      "success_criteria": "Comprend malgré accent fort et argot",
+      "description": "Accent québécois prononcé avec argot",
+      "dev_notes": "Test robustesse reconnaissance langage familier"
+    },
+
+    {
+      "id": "client_presse",
+      "category": "cas_difficiles",
+      "difficulty": "moyen",
+      "input": "Vite vite, j'ai besoin d'une coupe, vous avez de quoi aujourd'hui?",
+      "expected_response_contains": ["aujourd'hui", "disponible", "urgent", "service"],
+      "success_criteria": "Identifie urgence et propose solutions",
+      "description": "Client pressé avec urgence",
+      "dev_notes": "Test gestion urgence client"
+    },
+
+    {
+      "id": "modification_rdv",
+      "category": "cas_difficiles",
+      "difficulty": "difficile",
+      "conversation_flow": [
+        {
+          "step": 1,
+          "input": "RDV mardi 14h coupe homme",
+          "expected_contains": ["mardi", "14h", "nom"]
+        },
+        {
+          "step": 2,
+          "input": "Finalement jeudi c'est mieux",
+          "expected_contains": ["jeudi", "changement", "14h", "16h"],
+          "critical_test": "Adapte le changement intelligemment"
+        }
+      ],
+      "success_criteria": "Gère modification en cours sans perdre infos",
+      "description": "Changement en cours de réservation",
+      "dev_notes": "Test flexibilité gestion modifications"
+    },
+
+    {
+      "id": "validation_complete",
+      "category": "validation",
+      "difficulty": "moyen",
+      "conversation_flow": [
+        {
+          "step": 1,
+          "input": "RDV coupe homme",
+          "expected_contains": ["date"]
+        },
+        {
+          "step": 2,
+          "input": "Jeudi 14h",
+          "expected_contains": ["nom"]
+        },
+        {
+          "step": 3,
+          "input": "Jean Tremblay",
+          "expected_contains": ["confirme", "coupe homme", "jeudi", "14h", "jean"],
+          "critical_test": "DOIT résumer TOUTES les informations"
+        }
+      ],
+      "success_criteria": "Résumé complet avant confirmation finale",
+      "description": "Validation finale avec résumé complet",
+      "dev_notes": "TEST CRITIQUE: confirmation doit être complète"
+    },
+
+    {
+      "id": "plusieurs_services",
+      "category": "cas_difficiles",
+      "difficulty": "difficile",
+      "input": "Coupe homme et aussi ma femme veut une coloration",
+      "expected_response_contains": ["deux", "services", "coupe homme", "coloration"],
+      "success_criteria": "Identifie et gère les services multiples",
+      "description": "Demande multi-services",
+      "dev_notes": "Test gestion demandes complexes multiples"
+    },
+
+    {
+      "id": "rappel_client",
+      "category": "cas_difficiles",
+      "difficulty": "moyen",
+      "input": "C'est encore Jean Tremblay, j'avais appelé hier",
+      "expected_response_contains": ["jean", "rappel", "précédent", "aider"],
+      "success_criteria": "Reconnaît client récurrent avec politesse",
+      "description": "Client qui rappelle",
+      "dev_notes": "Test gestion clients récurrents"
+    },
+
+    {
+      "id": "expression_temps_quebec",
+      "category": "quebec",
+      "difficulty": "moyen",
+      "input": "Peux-tu me prendre à matin pour une coupe?",
+      "expected_response_contains": ["matin", "aujourd'hui", "urgent", "disponible"],
+      "success_criteria": "Comprend 'à matin' = ce matin/aujourd'hui",
+      "description": "Expression temporelle québécoise",
+      "dev_notes": "Test compréhension 'à matin' typique québécois"
+    }
+  ],
+
+  "test_configuration": {
+    "success_thresholds": {
+      "minimum_pass_rate": 75,
+      "critical_scenarios_pass_rate": 90,
+      "performance_max_response_time": 3000,
+      "confidence_minimum": 0.6
+    },
+    
+    "dev_settings": {
+      "enable_detailed_logs": true,
+      "simulate_network_delay": true,
+      "max_delay_ms": 200,
+      "enable_conversation_memory": true,
+      "memory_timeout_minutes": 60
+    },
+
+    "error_categories": {
+      "critical": ["anti_boucles", "validation"],
+      "important": ["rendez_vous", "quebec"],
+      "standard": ["prix", "horaires", "salutations"],
+      "advanced": ["cas_difficiles"]
+    }
+  },
+
+  "quebec_linguistic_patterns": {
+    "expressions_temporelles": {
+      "à_matin": "ce matin/aujourd'hui",
+      "à_soir": "ce soir",
+      "au_boutte": "au bout/à la fin",
+      "tantôt": "tout à l'heure"
+    },
+    
+    "expressions_courantes": {
+      "c'est-tu": "est-ce que",
+      "peux-tu": "peux-tu/pouvez-vous",
+      "j'aimerais_ça": "j'aimerais",
+      "ça_fait_tu": "est-ce que ça fait",
+      "bin": "bien",
+      "pas_pire": "pas mal/correct"
+    },
+
+    "services_vocabulary": {
+      "trim": "coupe courte",
+      "buzz_cut": "coupe très courte",
+      "shape_up": "rafraîchir contours",
+      "lineup": "ligne de cheveux nette"
+    }
+  },
+
+  "expected_responses_templates": {
+    "greeting": "Bonjour! Je peux vous aider avec les rendez-vous, prix et horaires.",
+    "ask_service": "Quel type de service voulez-vous? Coupe homme, coupe femme, barbe ou coloration?",
+    "ask_date": "Quand souhaitez-vous votre rendez-vous? Je peux proposer mardi ou jeudi.",
+    "ask_time": "Quelle heure vous convient? 14h avec Marco ou 16h avec Jessica?",
+    "ask_name": "Quel est votre nom complet s'il vous plaît?",
+    "final_confirmation": "Je confirme votre rendez-vous: [service] [date] [heure] avec [barbier]. À bientôt!"
+  },
+
+  "dev_debugging": {
+    "enable_step_by_step": true,
+    "log_intent_analysis": true,
+    "log_context_extraction": true,
+    "log_response_generation": true,
+    "preserve_conversation_history": true
+  }
+}

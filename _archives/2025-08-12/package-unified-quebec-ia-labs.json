@@ -1,0 +1,50 @@
+{
+  "name": "quebec-ia-labs-unified",
+  "version": "1.0.0",
+  "description": "Quebec-IA-Labs + Marcel V8.0 Ultimate - Système unifié avec IA, Paiements et Base de données",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Tests à venir\" && exit 0"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.0",
+    "@supabase/supabase-js": "^2.39.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.1.0",
+    "node-fetch": "^3.3.2",
+    "stripe": "^14.10.0",
+    "twilio": "^4.19.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "quebec-ia-labs",
+    "marcel-ai",
+    "barbershop",
+    "ai-assistant",
+    "claude",
+    "stripe",
+    "supabase",
+    "twilio",
+    "elevenlabs",
+    "quebec",
+    "academie-precision"
+  ],
+  "author": "Académie Précision - Franky",
+  "license": "Private",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AcademiePrecision/Quebec-IA-Labs.git"
+  },
+  "homepage": "https://quebec-ia-labs.replit.app",
+  "bugs": {
+    "url": "https://github.com/AcademiePrecision/Quebec-IA-Labs/issues"
+  }
+}

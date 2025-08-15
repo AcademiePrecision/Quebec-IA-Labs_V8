@@ -1,0 +1,13 @@
+modules = ["nodejs-18_x:v8-20230920-bd784b9"]
+
+[nix]
+channel = "stable-22_11"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[deployment]
+build = ["sh", "-c", "npm install"]
+run = ["sh", "-c", "node index.js"]
+deploymentTarget = "cloudrun"

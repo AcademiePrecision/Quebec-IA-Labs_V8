@@ -1,0 +1,50 @@
+{
+  "name": "marcel-trainer-dev",
+  "version": "1.0.0",
+  "description": "🧠 Marcel Trainer - Système d'entraînement intelligent pour Valet-IA",
+  "main": "marcel-dev-server.js",
+  "scripts": {
+    "start": "node marcel-dev-server.js",
+    "dev": "node marcel-dev-server.js",
+    "test": "node marcel-trainer.js",
+    "analyze": "node context-analyzer.js"
+  },
+  "keywords": [
+    "marcel",
+    "ai",
+    "training",
+    "chatbot",
+    "quebec",
+    "salon",
+    "valet-ia"
+  ],
+  "author": "Franky - Académie Précision",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "openai": "^4.20.1",
+    "node-fetch": "^3.3.2",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/franky/marcel-trainer-dev.git"
+  },
+  "replit": {
+    "entrypoint": "marcel-dev-server.js",
+    "language": "nodejs",
+    "run": "node marcel-dev-server.js",
+    "deploymentTarget": "cloudrun"
+  },
+  "environment": {
+    "NODE_ENV": "development",
+    "MARCEL_DEV_MODE": "true",
+    "DEBUG_LOGS": "true"
+  }
+}

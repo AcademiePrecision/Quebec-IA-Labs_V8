@@ -1,0 +1,389 @@
+{
+  "timestamp": "2025-08-12T21:09:24.692Z",
+  "summary": {
+    "totalItemsProcessed": 59,
+    "itemsMovedSuccessfully": 54,
+    "itemsNotFound": 5,
+    "itemsFailed": 0,
+    "totalSizeFreed": 168506225,
+    "totalSizeFreedFormatted": "160.7 MB"
+  },
+  "details": [
+    {
+      "item": "Marcel-Trainer-Dev-BACKUP",
+      "moved": true,
+      "size": 196154,
+      "reason": "success"
+    },
+    {
+      "item": "Marcel-Trainer-Prod-Replit",
+      "moved": true,
+      "size": 401834,
+      "reason": "success"
+    },
+    {
+      "item": "Quebec-IA-Labs-Prod-Replit",
+      "moved": true,
+      "size": 5253498,
+      "reason": "success"
+    },
+    {
+      "item": "Quebec-IA-Labs-Replit",
+      "moved": true,
+      "size": 24538652,
+      "reason": "success"
+    },
+    {
+      "item": "Quebec-IA-Labs.zip",
+      "moved": true,
+      "size": 4755290,
+      "reason": "success"
+    },
+    {
+      "item": "Quebec-IA-Labs_2025-08-11-13h32",
+      "moved": true,
+      "size": 72710474,
+      "reason": "success"
+    },
+    {
+      "item": "Quebec-IA-Labs_2025-08-11-15h26",
+      "moved": true,
+      "size": 56182,
+      "reason": "success"
+    },
+    {
+      "item": "deploy-v8-quebec",
+      "moved": true,
+      "size": 197974,
+      "reason": "success"
+    },
+    {
+      "item": "2025-08-01-code_Claude_PipeLine.txt",
+      "moved": true,
+      "size": 130153,
+      "reason": "success"
+    },
+    {
+      "item": "App.tsx",
+      "moved": true,
+      "size": 2188,
+      "reason": "success"
+    },
+    {
+      "item": "TestApp.tsx",
+      "moved": true,
+      "size": 448,
+      "reason": "success"
+    },
+    {
+      "item": "Clefs.txt",
+      "moved": true,
+      "size": 2889,
+      "reason": "success"
+    },
+    {
+      "item": "Hey Franky! I V7.0.txt",
+      "moved": true,
+      "size": 13674,
+      "reason": "success"
+    },
+    {
+      "item": "ReadMeKen.md",
+      "moved": true,
+      "size": 6879,
+      "reason": "success"
+    },
+    {
+      "item": "Capture d'écran 2025-08-10 221734.jpg",
+      "moved": false,
+      "size": 0,
+      "reason": "not_found"
+    },
+    {
+      "item": "Capture d'écran 2025-08-10 222023.jpg",
+      "moved": false,
+      "size": 0,
+      "reason": "not_found"
+    },
+    {
+      "item": "Capture d'écran 2025-08-10 222107.jpg",
+      "moved": false,
+      "size": 0,
+      "reason": "not_found"
+    },
+    {
+      "item": "Capture d'écran 2025-08-11 143240.jpg",
+      "moved": false,
+      "size": 0,
+      "reason": "not_found"
+    },
+    {
+      "item": "babel.config.js",
+      "moved": true,
+      "size": 165,
+      "reason": "success"
+    },
+    {
+      "item": "metro.config.js",
+      "moved": true,
+      "size": 382,
+      "reason": "success"
+    },
+    {
+      "item": "tailwind.config.js",
+      "moved": true,
+      "size": 1693,
+      "reason": "success"
+    },
+    {
+      "item": "tsconfig.json",
+      "moved": true,
+      "size": 85,
+      "reason": "success"
+    },
+    {
+      "item": "global.css",
+      "moved": true,
+      "size": 58,
+      "reason": "success"
+    },
+    {
+      "item": "bun.lock",
+      "moved": true,
+      "size": 326119,
+      "reason": "success"
+    },
+    {
+      "item": "app.json",
+      "moved": true,
+      "size": 316,
+      "reason": "success"
+    },
+    {
+      "item": "src",
+      "moved": true,
+      "size": 581566,
+      "reason": "success"
+    },
+    {
+      "item": "assets",
+      "moved": true,
+      "size": 19428618,
+      "reason": "success"
+    },
+    {
+      "item": "patches",
+      "moved": true,
+      "size": 24238,
+      "reason": "success"
+    },
+    {
+      "item": "test-claude-api.js",
+      "moved": true,
+      "size": 1425,
+      "reason": "success"
+    },
+    {
+      "item": "test-all-apis.js",
+      "moved": true,
+      "size": 1137,
+      "reason": "success"
+    },
+    {
+      "item": "test-env.sh",
+      "moved": true,
+      "size": 135,
+      "reason": "success"
+    },
+    {
+      "item": "simple-test-server.js",
+      "moved": true,
+      "size": 2703,
+      "reason": "success"
+    },
+    {
+      "item": "consolidate-savageco.js",
+      "moved": true,
+      "size": 22212,
+      "reason": "success"
+    },
+    {
+      "item": "generate-asset-script.ts",
+      "moved": true,
+      "size": 3729,
+      "reason": "success"
+    },
+    {
+      "item": "ngrok-tool",
+      "moved": true,
+      "size": 0,
+      "reason": "success"
+    },
+    {
+      "item": "quebec-ia-labs",
+      "moved": true,
+      "size": 30893170,
+      "reason": "success"
+    },
+    {
+      "item": "package-lock.json.backup",
+      "moved": true,
+      "size": 667190,
+      "reason": "success"
+    },
+    {
+      "item": "package.json.app-backup",
+      "moved": true,
+      "size": 403,
+      "reason": "success"
+    },
+    {
+      "item": "package.json.backup",
+      "moved": true,
+      "size": 5800,
+      "reason": "success"
+    },
+    {
+      "item": "package-lock2.json",
+      "moved": true,
+      "size": 93,
+      "reason": "success"
+    },
+    {
+      "item": "package-replit-ready.json",
+      "moved": true,
+      "size": 671,
+      "reason": "success"
+    },
+    {
+      "item": "package-replit.json",
+      "moved": true,
+      "size": 744,
+      "reason": "success"
+    },
+    {
+      "item": "package-stripe-setup.json",
+      "moved": true,
+      "size": 625,
+      "reason": "success"
+    },
+    {
+      "item": "package-unified-quebec-ia-labs.json",
+      "moved": true,
+      "size": 1299,
+      "reason": "success"
+    },
+    {
+      "item": "server-marcel-final-corrige.js",
+      "moved": true,
+      "size": 24176,
+      "reason": "success"
+    },
+    {
+      "item": "server-marcel-final-fixed.js",
+      "moved": true,
+      "size": 35560,
+      "reason": "success"
+    },
+    {
+      "item": "server-simple.js",
+      "moved": true,
+      "size": 15290,
+      "reason": "success"
+    },
+    {
+      "item": "server-unified-quebec-ia-labs.js",
+      "moved": true,
+      "size": 60345,
+      "reason": "success"
+    },
+    {
+      "item": "replit-main.js",
+      "moved": true,
+      "size": 2371,
+      "reason": "success"
+    },
+    {
+      "item": "replit-server-fixed.js",
+      "moved": true,
+      "size": 11739,
+      "reason": "success"
+    },
+    {
+      "item": "replit-server.js",
+      "moved": true,
+      "size": 9299,
+      "reason": "success"
+    },
+    {
+      "item": "public/test-marcel-backup.html",
+      "moved": true,
+      "size": 49505,
+      "reason": "success"
+    },
+    {
+      "item": "public/test-marcel-upgrade.html",
+      "moved": true,
+      "size": 37033,
+      "reason": "success"
+    },
+    {
+      "item": "deploy-v8-quebec && mkdir CUsersfranc.claudeprojectsSavageCodeploy-v8-quebecpublic && cp CUsersfranc.claudeprojectsSavageCopublictest-marcel.html CUsersfranc.claudeprojectsSavageCodeploy-v8-quebecpublic",
+      "moved": false,
+      "size": 0,
+      "reason": "not_found"
+    },
+    {
+      "item": "exclude.txt",
+      "moved": true,
+      "size": 12,
+      "reason": "success"
+    },
+    {
+      "item": "nul",
+      "moved": true,
+      "size": 99,
+      "reason": "success"
+    },
+    {
+      "item": "start-all.bat",
+      "moved": true,
+      "size": 664,
+      "reason": "success"
+    },
+    {
+      "item": "start-all.sh",
+      "moved": true,
+      "size": 501,
+      "reason": "success"
+    },
+    {
+      "item": "structure.txt",
+      "moved": true,
+      "size": 8028766,
+      "reason": "success"
+    }
+  ],
+  "activeFilesKept": [
+    "Quebec-IA-Labs-V8-Replit_Dev_20250812",
+    "Quebec-IA-Labs-V8-Final",
+    "scripts",
+    "Instruction_Claude_Code_Quebec-IA-Labs.md",
+    "_archives",
+    "Marcel-Trainer-Dev",
+    "server",
+    "main.js",
+    "index.js",
+    "package.json",
+    "package-lock.json",
+    "node_modules",
+    "supabase",
+    "training-data"
+  ],
+  "notes": [
+    "Tous les fichiers ont été archivés dans _archives/2025-08-12",
+    "Les fichiers actifs du projet Marcel AI ont été conservés",
+    "Ce nettoyage libère de l'espace et organise le projet",
+    "Les archives peuvent être supprimées après vérification"
+  ]
+}

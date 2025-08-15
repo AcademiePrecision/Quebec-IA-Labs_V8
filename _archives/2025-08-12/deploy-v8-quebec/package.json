@@ -1,0 +1,35 @@
+{
+  "name": "quebec-ia-labs-v8",
+  "version": "8.0.0",
+  "description": "🧠 Marcel V8.0 Ultimate - Quebec IA Labs Production",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "node server/test-verification.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "@anthropic-ai/sdk": "^0.20.0",
+    "openai": "^4.20.1",
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/academieprecision/quebec-ia-labs.git"
+  },
+  "replit": {
+    "entrypoint": "index.js",
+    "language": "nodejs",
+    "run": "node index.js"
+  },
+  "environment": {
+    "NODE_ENV": "production",
+    "MARCEL_VERSION": "8.0.0"
+  }
+}

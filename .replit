@@ -1,0 +1,35 @@
+<<<<<<< HEAD
+entrypoint = "replit-server.js"
+modules = ["nodejs-22"]
+
+run = "npm install && node replit-server.js"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "npm install && node replit-server.js"]
+deploymentTarget = "cloudrun"
+ignorePorts = false
+
+[env]
+NODE_ENV = "production"
+PORT = "3000"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+=======
+run = "npm start"
+modules = ["nodejs-20"]
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+run = ["sh", "-c", "npm start"]
+
+[env]
+NODE_ENV = "production"
+PORT = "3000"
+>>>>>>> b656570f498857fe3f9e07bf12ba9ff9550cb611

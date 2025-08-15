@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "Académie Précision",
+    "slug": "academie-precision",
+    "scheme": "academie-precision",
+    "version": "8.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "sdkVersion": "53.0.0",
+    "platforms": ["ios", "android"],
+    "main": "index.js",
+    "newArchEnabled": true,
+    "icon": "./assets/barber-client.png",
+    "splash": {
+      "image": "./assets/splash/pexels-nickoloui-1319459.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#FF6B35"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.academieprecision.mobile"
+    },
+    "android": {
+      "edgeToEdgeEnabled": true,
+      "package": "com.academieprecision.mobile",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/barber-clippers.png",
+        "backgroundColor": "#FF6B35"
+      }
+    },
+    "web": {
+      "favicon": "./assets/barber-hands.png"
+    }
+  }
+}

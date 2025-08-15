@@ -1,0 +1,17 @@
+{
+  "name": "stripe-setup-academie-precision",
+  "version": "1.0.0",
+  "description": "Automated Stripe setup script for Académie Précision",
+  "main": "stripe-setup-script.js",
+  "scripts": {
+    "setup": "node stripe-setup-script.js",
+    "setup:test": "STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY_TEST node stripe-setup-script.js",
+    "setup:live": "STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY_LIVE node stripe-setup-script.js"
+  },
+  "dependencies": {
+    "stripe": "^14.21.0"
+  },
+  "keywords": ["stripe", "subscription", "quebec", "barbering", "education"],
+  "author": "Académie Précision",
+  "license": "MIT"
+}

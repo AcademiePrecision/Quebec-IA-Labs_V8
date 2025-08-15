@@ -1,0 +1,63 @@
+{
+  "name": "marcel-trainer-dev",
+  "version": "1.0.0",
+  "description": "🧠 Marcel Trainer - Système d'entraînement intelligent pour Valet-IA",
+  "main": "marcel-dev-server.js",
+  "scripts": {
+    "start": "node marcel-dev-server.js",
+    "dev": "node marcel-dev-server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:suite": "node test/test-suite-v7.js",
+    "test:e2e": "node test/e2e-smoke-tests.js",
+    "test:smoke": "node test/e2e-smoke-tests.js",
+    "test:all": "npm run test:suite && npm run test && npm run test:e2e",
+    "test:ci": "jest --ci --coverage --maxWorkers=2",
+    "analyze": "node context-analyzer.js",
+    "sync": "node scripts/sync-to-replit.js",
+    "watch": "node scripts/watch-and-sync.js"
+  },
+  "keywords": [
+    "marcel",
+    "ai",
+    "training",
+    "chatbot",
+    "quebec",
+    "salon",
+    "valet-ia"
+  ],
+  "author": "Franky - Académie Précision",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "openai": "^4.20.1",
+    "node-fetch": "^3.3.2",
+    "@anthropic-ai/sdk": "^0.20.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "chalk": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/franky/marcel-trainer-dev.git"
+  },
+  "replit": {
+    "entrypoint": "marcel-dev-server.js",
+    "language": "nodejs",
+    "run": "node marcel-dev-server.js",
+    "deploymentTarget": "cloudrun"
+  },
+  "environment": {
+    "NODE_ENV": "development",
+    "MARCEL_DEV_MODE": "true",
+    "DEBUG_LOGS": "true"
+  }
+}

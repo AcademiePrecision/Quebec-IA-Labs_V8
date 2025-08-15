@@ -1,0 +1,24 @@
+{
+  "name": "quebec-ia-labs-v8",
+  "version": "8.0.0", 
+  "description": "🧠 Marcel V8.0 Ultimate - Quebec IA Labs Production avec Claude",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "node main.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "@anthropic-ai/sdk": "^0.27.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "replit": {
+    "entrypoint": "main.js",
+    "language": "nodejs",
+    "run": "node main.js"
+  }
+}

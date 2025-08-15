@@ -1,0 +1,35 @@
+{
+  "name": "marcel-v8-ultimate-final",
+  "version": "8.0.0-final", 
+  "description": "🧠 Marcel V8.0 Ultimate Final - Quebec IA Labs Production avec Claude - VERSION PROPRE",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "@anthropic-ai/sdk": "^0.27.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "marcel",
+    "ai",
+    "salon",
+    "quebec",
+    "twilio",
+    "claude",
+    "receptionist"
+  ],
+  "author": "Académie Précision - Franky",
+  "license": "Private",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AcademiePrecision/Quebec-IA-Labs.git"
+  }
+}

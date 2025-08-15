@@ -1,0 +1,26 @@
+{
+  "name": "@savageco/shared",
+  "version": "8.1.0",
+  "description": "🔧 SavageCo Shared - Code commun entre projets",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint . --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.1.3"
+  },
+  "exports": {
+    "./types": "./types/index.ts",
+    "./utils": "./utils/index.ts",
+    "./config": "./config/index.ts",
+    "./constants": "./constants/index.ts"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "marcel-v8-production",
+  "version": "8.0.0",
+  "description": "Marcel V8.0 Ultimate - Production Replit",
+  "main": "quebec-ia-labs-fresh/main.js",
+  "scripts": {
+    "start": "cd quebec-ia-labs-fresh && npm install && node main.js",
+    "dev": "cd quebec-ia-labs-fresh && node main.js"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "private": true
+}

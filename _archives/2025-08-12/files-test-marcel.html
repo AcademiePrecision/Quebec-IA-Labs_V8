@@ -1,0 +1,1267 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>🧠 Marcel Trainer DEV - Dashboard</title>
+        <style>
+            :root {
+                --primary: #667eea;
+                --secondary: #764ba2;
+                --success: #10b981;
+                --warning: #f59e0b;
+                --error: #ef4444;
+                --dark: #1a202c;
+                --light: #f7fafc;
+                --border: #e2e8f0;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                background: linear-gradient(
+                    135deg,
+                    var(--primary) 0%,
+                    var(--secondary) 100%
+                );
+                min-height: 100vh;
+                color: #333;
+            }
+
+            .container {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            .header {
+                background: white;
+                border-radius: 15px;
+                padding: 30px;
+                margin-bottom: 30px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .header::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 100px;
+                height: 100%;
+                background: linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--primary) 20
+                );
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+                background: linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--secondary)
+                );
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                margin-bottom: 10px;
+            }
+
+            .header .subtitle {
+                color: #718096;
+                font-size: 1.1rem;
+            }
+
+            .dev-badge {
+                display: inline-block;
+                background: var(--warning);
+                color: white;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                margin-top: 10px;
+            }
+
+            .main-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+                margin-bottom: 30px;
+            }
+
+            .panel {
+                background: white;
+                border-radius: 15px;
+                padding: 25px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+                position: relative;
+            }
+
+            .panel h2 {
+                color: #2d3748;
+                margin-bottom: 20px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid var(--border);
+                font-size: 1.5rem;
+            }
+
+            /* Chat Interface */
+            .chat-container {
+                height: 400px;
+                border: 2px solid var(--border);
+                border-radius: 12px;
+                padding: 15px;
+                margin-bottom: 20px;
+                background: var(--light);
+                overflow-y: auto;
+                scroll-behavior: smooth;
+            }
+
+            .message {
+                margin: 12px 0;
+                padding: 12px 16px;
+                border-radius: 20px;
+                max-width: 80%;
+                animation: slideIn 0.3s ease;
+                position: relative;
+            }
+
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .user-message {
+                background: linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--secondary)
+                );
+                color: white;
+                margin-left: auto;
+                border-bottom-right-radius: 5px;
+            }
+
+            .marcel-message {
+                background: white;
+                color: #333;
+                border: 2px solid var(--border);
+                border-bottom-left-radius: 5px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .message-meta {
+                font-size: 0.75rem;
+                opacity: 0.7;
+                margin-top: 5px;
+            }
+
+            /* Input */
+            .input-group {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .client-selector {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 15px;
+                padding: 15px;
+                background: var(--light);
+                border-radius: 12px;
+            }
+
+            .client-selector label {
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+            }
+
+            .client-selector select {
+                flex: 1;
+                padding: 8px;
+                border: 2px solid var(--border);
+                border-radius: 8px;
+            }
+
+            .recognition-toggle {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .chat-input {
+                flex: 1;
+                padding: 12px 16px;
+                border: 2px solid var(--border);
+                border-radius: 25px;
+                font-size: 16px;
+                transition: all 0.3s;
+            }
+
+            .chat-input:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            }
+
+            .send-btn {
+                padding: 12px 24px;
+                background: linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--secondary)
+                );
+                color: white;
+                border: none;
+                border-radius: 25px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: transform 0.2s;
+            }
+
+            .send-btn:hover {
+                transform: translateY(-2px);
+            }
+
+            .send-btn:disabled {
+                opacity: 0.6;
+                transform: none;
+                cursor: not-allowed;
+            }
+
+            /* Quick Scenarios */
+            .scenarios-section {
+                margin-top: 20px;
+            }
+
+            .scenarios-section h3 {
+                margin-bottom: 15px;
+                color: #2d3748;
+                font-size: 1.1rem;
+            }
+
+            .scenarios-tabs {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 15px;
+                border-bottom: 2px solid var(--border);
+            }
+
+            .scenario-tab {
+                padding: 8px 16px;
+                background: none;
+                border: none;
+                color: #718096;
+                cursor: pointer;
+                font-weight: 600;
+                border-bottom: 3px solid transparent;
+                transition: all 0.3s;
+            }
+
+            .scenario-tab.active {
+                color: var(--primary);
+                border-bottom-color: var(--primary);
+            }
+
+            .scenarios-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 12px;
+            }
+
+            .scenario-btn {
+                padding: 12px 16px;
+                background: var(--light);
+                border: 2px solid var(--border);
+                border-radius: 10px;
+                cursor: pointer;
+                transition: all 0.3s;
+                text-align: left;
+                font-size: 14px;
+            }
+
+            .scenario-btn:hover {
+                background: var(--primary);
+                color: white;
+                border-color: var(--primary);
+            }
+
+            .scenario-emoji {
+                font-size: 16px;
+                margin-right: 8px;
+            }
+
+            .scenario-description {
+                font-size: 11px;
+                opacity: 0.7;
+                margin-top: 4px;
+            }
+
+            /* Stats Panel */
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 15px;
+                margin-bottom: 25px;
+            }
+
+            .stat-card {
+                background: linear-gradient(135deg, var(--light), white);
+                padding: 20px;
+                border-radius: 12px;
+                text-align: center;
+                border: 2px solid var(--border);
+                transition: transform 0.3s;
+            }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .stat-value {
+                font-size: 2.5rem;
+                font-weight: bold;
+                background: linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--secondary)
+                );
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .stat-label {
+                color: #718096;
+                font-size: 0.9rem;
+                margin-top: 5px;
+                font-weight: 600;
+            }
+
+            /* Context Display Enhanced */
+            .context-display {
+                background: var(--light);
+                border: 2px solid var(--border);
+                border-radius: 12px;
+                padding: 20px;
+                margin-top: 20px;
+            }
+
+            .context-section {
+                margin-bottom: 20px;
+            }
+
+            .context-section h5 {
+                color: #2d3748;
+                margin-bottom: 10px;
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+
+            .context-fields-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 8px;
+            }
+
+            .context-field {
+                padding: 8px 12px;
+                background: white;
+                border: 2px solid var(--border);
+                border-radius: 20px;
+                font-size: 13px;
+                transition: all 0.3s;
+                position: relative;
+            }
+
+            .context-field.expected {
+                border-style: dashed;
+                color: #999;
+                background: #fafafa;
+            }
+
+            .context-field.filled {
+                background: var(--success);
+                color: white;
+                border-color: var(--success);
+                animation: pulse 0.5s;
+            }
+
+            .context-field.partial {
+                background: var(--warning);
+                color: white;
+                border-color: var(--warning);
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.05);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+
+            /* Training Controls */
+            .training-controls {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+
+            .train-btn {
+                padding: 15px 20px;
+                border: none;
+                border-radius: 12px;
+                cursor: pointer;
+                font-weight: 600;
+                font-size: 16px;
+                transition: all 0.3s;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .train-btn.primary {
+                background: linear-gradient(135deg, var(--success), #059669);
+                color: white;
+            }
+
+            .train-btn.secondary {
+                background: linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--secondary)
+                );
+                color: white;
+            }
+
+            .train-btn.danger {
+                background: linear-gradient(135deg, var(--error), #dc2626);
+                color: white;
+            }
+
+            .train-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Responsive */
+            @media (max-width: 768px) {
+                .main-grid {
+                    grid-template-columns: 1fr;
+                    gap: 20px;
+                }
+
+                .stats-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                .scenarios-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            /* Dev Info */
+            .dev-info {
+                background: linear-gradient(135deg, #f59e0b, #d97706);
+                color: white;
+                padding: 15px;
+                border-radius: 12px;
+                margin-bottom: 20px;
+                font-size: 14px;
+            }
+
+            .api-endpoint {
+                font-family: "Courier New", monospace;
+                background: rgba(0, 0, 0, 0.1);
+                padding: 4px 8px;
+                border-radius: 6px;
+                font-size: 12px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <h1>🧠 Marcel Trainer</h1>
+                <p class="subtitle">
+                    Système d'entraînement intelligent - Version développement
+                </p>
+                <span class="dev-badge">DEV MODE v2.2</span>
+            </div>
+
+            <!-- Dev Info -->
+            <div class="dev-info">
+                <strong>🔧 Mode Développement Claude Sonnet 3.5</strong><br />
+                IA Avancée • Reconnaissance Client • Relations Personnalisées •
+                API:
+                <span class="api-endpoint" id="currentEndpoint"
+                    >/test-claude-smart</span
+                >
+            </div>
+
+            <!-- Main Grid -->
+            <div class="main-grid">
+                <!-- Chat Panel -->
+                <div class="panel">
+                    <h2>💬 Test Conversationnel</h2>
+
+                    <!-- Client Selector -->
+                    <div class="client-selector">
+                        <label>👤 Tester avec:</label>
+                        <select id="clientSelect">
+                            <option value="+15145551234">
+                                Jean Tremblay (client régulier de Marco)
+                            </option>
+                            <option value="+15145552345">
+                                Marie Dubois (cliente de Julie)
+                            </option>
+                            <option value="+15145553456">
+                                Pierre Gagnon (nouveau client)
+                            </option>
+                            <option value="">Sans numéro (anonyme)</option>
+                        </select>
+                        <div class="recognition-toggle">
+                            <input
+                                type="checkbox"
+                                id="useRecognition"
+                                checked
+                            />
+                            <label for="useRecognition"
+                                >Système de reconnaissance active</label
+                            >
+                        </div>
+                    </div>
+
+                    <div class="chat-container" id="chatContainer">
+                        <div class="message marcel-message">
+                            <div>
+                                👋 Bonjour! Je suis Marcel avec Claude Sonnet
+                                3.5. Comment puis-je vous aider aujourd'hui?
+                            </div>
+                            <div class="message-meta">
+                                Claude Sonnet 3.5 + Relations Clients
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            class="chat-input"
+                            id="messageInput"
+                            placeholder="Tape ta phrase ici... (ex: J'voudrais une coupe à matin)"
+                            onkeypress="if(event.key==='Enter' && !event.shiftKey) sendMessage()"
+                        />
+                        <button
+                            class="send-btn"
+                            id="sendBtn"
+                            onclick="sendMessage()"
+                        >
+                            <span id="sendText">Envoyer</span>
+                        </button>
+                    </div>
+
+                    <!-- Enhanced Scenarios Section -->
+                    <div class="scenarios-section">
+                        <h3>🎭 Scénarios de test rapides</h3>
+
+                        <div class="scenarios-tabs">
+                            <button
+                                class="scenario-tab active"
+                                onclick="showScenarioTab('simple')"
+                            >
+                                Simples
+                            </button>
+                            <button
+                                class="scenario-tab"
+                                onclick="showScenarioTab('complex')"
+                            >
+                                Complexes
+                            </button>
+                            <button
+                                class="scenario-tab"
+                                onclick="showScenarioTab('edge')"
+                            >
+                                Cas limites
+                            </button>
+                        </div>
+
+                        <!-- Simple Scenarios -->
+                        <div class="scenarios-grid" id="simple-scenarios">
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('Salut, j\'voudrais une coupe pour demain')"
+                            >
+                                <span class="scenario-emoji">✂️</span>
+                                <strong>Coupe simple</strong>
+                                <div class="scenario-description">
+                                    Test: service + date
+                                </div>
+                            </button>
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('C\'est combien pour la barbe?')"
+                            >
+                                <span class="scenario-emoji">💰</span>
+                                <strong>Prix barbe</strong>
+                                <div class="scenario-description">
+                                    Test: question prix
+                                </div>
+                            </button>
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('Je peux-tu avoir Marco jeudi?')"
+                            >
+                                <span class="scenario-emoji">👨</span>
+                                <strong>Barbier spécifique</strong>
+                                <div class="scenario-description">
+                                    Test: barbier + date
+                                </div>
+                            </button>
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('J\'annule mon rendez-vous')"
+                            >
+                                <span class="scenario-emoji">❌</span>
+                                <strong>Annulation</strong>
+                                <div class="scenario-description">
+                                    Test: annulation
+                                </div>
+                            </button>
+                        </div>
+
+                        <!-- Complex Scenarios -->
+                        <div
+                            class="scenarios-grid"
+                            id="complex-scenarios"
+                            style="display: none"
+                        >
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('Salut, je m\'appelle Pierre Gagnon, je veux une coupe mardi à 14h, j\'ai pas de coiffeur préféré, je te laisse choisir')"
+                            >
+                                <span class="scenario-emoji">🎯</span>
+                                <strong>Complète avec nom</strong>
+                                <div class="scenario-description">
+                                    Test: nom + service + date + heure + choix
+                                    barbier
+                                </div>
+                            </button>
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('Bonjour Marcel, c\'est Jean Tremblay. J\'aimerais prendre rendez-vous pour une coupe et barbe demain matin vers 10h avec Marco si possible')"
+                            >
+                                <span class="scenario-emoji">📅</span>
+                                <strong>Client régulier complet</strong>
+                                <div class="scenario-description">
+                                    Test: reconnaissance + multi-services +
+                                    préférences
+                                </div>
+                            </button>
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('Allo, j\'suis nouveau client, j\'voudrais une coupe moderne avec teinture, c\'est-tu possible samedi? Pis c\'est combien à peu près?')"
+                            >
+                                <span class="scenario-emoji">🆕</span>
+                                <strong>Nouveau client curieux</strong>
+                                <div class="scenario-description">
+                                    Test: nouveau + services multiples + prix +
+                                    date
+                                </div>
+                            </button>
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('Salut! Marie Dubois à l\'appareil. J\'ai un mariage samedi prochain, j\'aurais besoin d\'une coupe, coloration et mise en plis. Julie est-elle disponible vendredi après-midi?')"
+                            >
+                                <span class="scenario-emoji">💇‍♀️</span>
+                                <strong>Événement spécial</strong>
+                                <div class="scenario-description">
+                                    Test: contexte + urgence + multi-services +
+                                    barbier
+                                </div>
+                            </button>
+                        </div>
+
+                        <!-- Edge Cases -->
+                        <div
+                            class="scenarios-grid"
+                            id="edge-scenarios"
+                            style="display: none"
+                        >
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('J\'veux un rdv à soir à 23h')"
+                            >
+                                <span class="scenario-emoji">🌙</span>
+                                <strong>Hors horaires</strong>
+                                <div class="scenario-description">
+                                    Test: horaire impossible
+                                </div>
+                            </button>
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('Donnez-moi tous vos prix et horaires complets svp')"
+                            >
+                                <span class="scenario-emoji">📋</span>
+                                <strong>Demande exhaustive</strong>
+                                <div class="scenario-description">
+                                    Test: requête d'info complète
+                                </div>
+                            </button>
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('Euh... j\'sais pas... peut-être une coupe... ou pas... c\'est quand vous voulez...')"
+                            >
+                                <span class="scenario-emoji">🤔</span>
+                                <strong>Client indécis</strong>
+                                <div class="scenario-description">
+                                    Test: ambiguïté
+                                </div>
+                            </button>
+                            <button
+                                class="scenario-btn"
+                                onclick="testScenario('URGENT!!! Besoin coupe MAINTENANT! C\'est une urgence!')"
+                            >
+                                <span class="scenario-emoji">🚨</span>
+                                <strong>Urgence</strong>
+                                <div class="scenario-description">
+                                    Test: demande urgente
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Panel -->
+                <div class="panel">
+                    <h2>📊 Formation & Métriques</h2>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="successRate">85%</div>
+                            <div class="stat-label">Succès</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalTests">0</div>
+                            <div class="stat-label">Tests</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="avgTime">--ms</div>
+                            <div class="stat-label">Temps</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="confidence">--%</div>
+                            <div class="stat-label">Confiance</div>
+                        </div>
+                    </div>
+
+                    <div class="training-controls">
+                        <button
+                            class="train-btn primary"
+                            onclick="runFullTraining()"
+                        >
+                            <span id="trainText">🚀 Formation Complète</span>
+                        </button>
+                        <button
+                            class="train-btn secondary"
+                            onclick="viewTrainingReport()"
+                        >
+                            📋 Rapport Détaillé
+                        </button>
+                        <button
+                            class="train-btn secondary"
+                            onclick="analyzeContext()"
+                        >
+                            🔍 Analyser Contexte
+                        </button>
+                        <button
+                            class="train-btn danger"
+                            onclick="clearSession()"
+                        >
+                            🗑️ Vider Session
+                        </button>
+                    </div>
+
+                    <!-- Enhanced Context Display -->
+                    <div class="context-display">
+                        <h4 style="margin-bottom: 15px; color: #2d3748">
+                            📋 Extraction de Contexte en Temps Réel
+                        </h4>
+
+                        <!-- Expected Fields -->
+                        <div class="context-section">
+                            <h5>🎯 Champs Attendus:</h5>
+                            <div class="context-fields-grid">
+                                <div
+                                    class="context-field expected"
+                                    id="expected-nom"
+                                >
+                                    👤 Nom
+                                </div>
+                                <div
+                                    class="context-field expected"
+                                    id="expected-service"
+                                >
+                                    ✂️ Service
+                                </div>
+                                <div
+                                    class="context-field expected"
+                                    id="expected-date"
+                                >
+                                    📅 Date
+                                </div>
+                                <div
+                                    class="context-field expected"
+                                    id="expected-heure"
+                                >
+                                    ⏰ Heure
+                                </div>
+                                <div
+                                    class="context-field expected"
+                                    id="expected-barbier"
+                                >
+                                    💈 Barbier
+                                </div>
+                                <div
+                                    class="context-field expected"
+                                    id="expected-prix"
+                                >
+                                    💰 Prix demandé
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Extracted Fields -->
+                        <div class="context-section">
+                            <h5>✅ Informations Extraites:</h5>
+                            <div
+                                class="context-fields-grid"
+                                id="extractedFields"
+                            >
+                                <!-- Sera rempli dynamiquement -->
+                            </div>
+                        </div>
+
+                        <!-- Session Info -->
+                        <div class="context-section">
+                            <h5>📊 État de la Session:</h5>
+                            <div
+                                id="sessionInfo"
+                                style="font-size: 12px; color: #666"
+                            >
+                                Session ID: <span id="sessionId">--</span><br />
+                                Messages: <span id="messageCount">0</span><br />
+                                Client reconnu:
+                                <span id="clientStatus">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Configuration
+            const API_BASE = window.location.origin;
+            let sessionId = "dev-session-" + Date.now();
+            let messageCount = 0;
+            let extractedContext = {};
+            let currentScenarioTab = "simple";
+
+            // Expected fields for context extraction
+            const expectedFields = [
+                "nom",
+                "service",
+                "date",
+                "heure",
+                "barbier",
+                "prix",
+            ];
+
+            // Initialisation
+            document.addEventListener("DOMContentLoaded", function () {
+                console.log("🧠 Marcel Trainer DEV Dashboard v2.2 chargé");
+                loadInitialStats();
+                updateEndpointDisplay();
+                updateSessionInfo();
+                initializeExpectedFields();
+            });
+
+            // Initialize expected fields display
+            function initializeExpectedFields() {
+                expectedFields.forEach((field) => {
+                    const elem = document.getElementById(`expected-${field}`);
+                    if (elem) {
+                        elem.classList.add("expected");
+                    }
+                });
+            }
+
+            // Show scenario tab
+            function showScenarioTab(tab) {
+                currentScenarioTab = tab;
+
+                // Update tabs
+                document.querySelectorAll(".scenario-tab").forEach((t) => {
+                    t.classList.remove("active");
+                });
+                event.target.classList.add("active");
+
+                // Show/hide scenario grids
+                document.getElementById("simple-scenarios").style.display =
+                    tab === "simple" ? "grid" : "none";
+                document.getElementById("complex-scenarios").style.display =
+                    tab === "complex" ? "grid" : "none";
+                document.getElementById("edge-scenarios").style.display =
+                    tab === "edge" ? "grid" : "none";
+            }
+
+            // Test scenario
+            function testScenario(text) {
+                document.getElementById("messageInput").value = text;
+                sendMessage();
+            }
+
+            // 💬 Envoyer message
+            async function sendMessage() {
+                const input = document.getElementById("messageInput");
+                const message = input.value.trim();
+
+                if (!message) return;
+
+                // UI: Désactiver pendant traitement
+                toggleInputState(false);
+                addMessageToChat(message, "user");
+                input.value = "";
+
+                try {
+                    const startTime = Date.now();
+
+                    // Déterminer l'endpoint selon le mode
+                    const useRecognition =
+                        document.getElementById("useRecognition").checked;
+                    const phoneNumber =
+                        document.getElementById("clientSelect").value;
+
+                    let endpoint = "/test-marcel-response";
+                    let body = {
+                        userInput: message,
+                        sessionId: sessionId,
+                    };
+
+                    if (useRecognition && phoneNumber) {
+                        endpoint = "/test-claude-smart";
+                        body.phoneNumber = phoneNumber;
+                    } else if (useRecognition) {
+                        endpoint = "/test-claude";
+                    }
+
+                    console.log(`🚀 Envoi à ${endpoint} avec:`, body);
+
+                    const response = await fetch(`${API_BASE}${endpoint}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(
+                            `HTTP ${response.status}: ${response.statusText}`,
+                        );
+                    }
+
+                    const data = await response.json();
+                    const responseTime = Date.now() - startTime;
+
+                    // Gestion des erreurs API
+                    if (data.error) {
+                        addMessageToChat(`❌ Erreur: ${data.error}`, "marcel", {
+                            error: true,
+                        });
+                        return;
+                    }
+
+                    // Afficher la réponse
+                    addMessageToChat(
+                        data.response || "Comment puis-je vous aider?",
+                        "marcel",
+                        {
+                            confidence: data.confidence,
+                            responseTime: responseTime,
+                            engine: data.engine || endpoint,
+                            isKnownClient: data.isKnownClient,
+                        },
+                    );
+
+                    // Mettre à jour contexte si disponible
+                    if (data.extractedInfo) {
+                        updateExtractedContext(data.extractedInfo);
+                    }
+
+                    // Mettre à jour client status
+                    if (data.clientData) {
+                        updateClientStatus(data.clientData);
+                    }
+
+                    // Mettre à jour les stats
+                    updateStats({
+                        responseTime,
+                        confidence: data.confidence,
+                        engine: data.engine,
+                    });
+
+                    messageCount++;
+                    updateSessionInfo();
+                } catch (error) {
+                    console.error("❌ Erreur:", error);
+                    addMessageToChat(
+                        `💥 Erreur réseau: ${error.message}`,
+                        "marcel",
+                        { error: true },
+                    );
+                }
+
+                toggleInputState(true);
+            }
+
+            // 💬 Ajouter message au chat
+            function addMessageToChat(text, sender, meta = {}) {
+                const container = document.getElementById("chatContainer");
+                const messageDiv = document.createElement("div");
+                messageDiv.className = `message ${sender}-message`;
+
+                let metaText = "";
+                if (meta.responseTime) metaText += `⏱️ ${meta.responseTime}ms `;
+                if (meta.confidence)
+                    metaText += `🎯 ${Math.round(meta.confidence * 100)}% `;
+                if (meta.engine) metaText += `🤖 ${meta.engine} `;
+                if (meta.isKnownClient !== undefined)
+                    metaText += meta.isKnownClient
+                        ? "✅ Client reconnu"
+                        : "🆕 Nouveau";
+                if (meta.error) metaText = "❌ Erreur";
+
+                messageDiv.innerHTML = `
+                <div>${text}</div>
+                ${metaText ? `<div class="message-meta">${metaText}</div>` : ""}
+            `;
+
+                container.appendChild(messageDiv);
+                container.scrollTop = container.scrollHeight;
+            }
+
+            // Update extracted context display
+            function updateExtractedContext(info) {
+                extractedContext = { ...extractedContext, ...info };
+
+                // Update expected fields status
+                expectedFields.forEach((field) => {
+                    const expectedElem = document.getElementById(
+                        `expected-${field}`,
+                    );
+                    if (expectedElem && extractedContext[field]) {
+                        expectedElem.classList.remove("expected");
+                        expectedElem.classList.add("filled");
+                    }
+                });
+
+                // Update extracted fields display
+                const container = document.getElementById("extractedFields");
+                container.innerHTML = "";
+
+                Object.keys(extractedContext).forEach((key) => {
+                    if (
+                        extractedContext[key] &&
+                        extractedContext[key] !== "[Omitted]"
+                    ) {
+                        const fieldDiv = document.createElement("div");
+                        fieldDiv.className = "context-field filled";
+
+                        let icon = "📌";
+                        if (key === "service") icon = "✂️";
+                        else if (key === "date") icon = "📅";
+                        else if (key === "heure" || key === "time") icon = "⏰";
+                        else if (key === "barbier") icon = "💈";
+                        else if (key === "nom" || key === "name") icon = "👤";
+                        else if (key === "prix" || key === "price") icon = "💰";
+
+                        const value =
+                            typeof extractedContext[key] === "object"
+                                ? JSON.stringify(extractedContext[key])
+                                : extractedContext[key];
+
+                        fieldDiv.innerHTML = `${icon} ${key}: ${value}`;
+                        container.appendChild(fieldDiv);
+                    }
+                });
+            }
+
+            // Update client status
+            function updateClientStatus(clientData) {
+                const statusElem = document.getElementById("clientStatus");
+                if (clientData && clientData.isKnownClient) {
+                    statusElem.innerHTML = `<strong style="color: var(--success);">✅ ${clientData.client.name}</strong>`;
+                } else {
+                    statusElem.textContent = "🆕 Nouveau client";
+                }
+            }
+
+            // Update session info
+            function updateSessionInfo() {
+                document.getElementById("sessionId").textContent =
+                    sessionId.substring(0, 20) + "...";
+                document.getElementById("messageCount").textContent =
+                    messageCount;
+            }
+
+            // 🔄 Toggle état input
+            function toggleInputState(enabled) {
+                const input = document.getElementById("messageInput");
+                const btn = document.getElementById("sendBtn");
+                const text = document.getElementById("sendText");
+
+                input.disabled = !enabled;
+                btn.disabled = !enabled;
+                text.textContent = enabled ? "Envoyer" : "Envoi...";
+            }
+
+            // 📈 Mettre à jour stats
+            function updateStats(data) {
+                if (data.responseTime) {
+                    document.getElementById("avgTime").textContent =
+                        `${data.responseTime}ms`;
+                }
+                if (data.confidence) {
+                    document.getElementById("confidence").textContent =
+                        `${Math.round(data.confidence * 100)}%`;
+                }
+                document.getElementById("totalTests").textContent =
+                    messageCount;
+            }
+
+            // Mise à jour affichage endpoint
+            function updateEndpointDisplay() {
+                const useRecognition =
+                    document.getElementById("useRecognition").checked;
+                const phoneNumber =
+                    document.getElementById("clientSelect").value;
+
+                let endpoint = "/test-marcel-response";
+                if (useRecognition && phoneNumber) {
+                    endpoint = "/test-claude-smart";
+                } else if (useRecognition) {
+                    endpoint = "/test-claude";
+                }
+
+                document.getElementById("currentEndpoint").textContent =
+                    endpoint;
+            }
+
+            // Event listeners
+            document
+                .getElementById("useRecognition")
+                .addEventListener("change", updateEndpointDisplay);
+            document
+                .getElementById("clientSelect")
+                .addEventListener("change", updateEndpointDisplay);
+
+            // 🗑️ Vider session
+            function clearSession() {
+                if (confirm("Vider la session et recommencer?")) {
+                    sessionId = "dev-session-" + Date.now();
+                    messageCount = 0;
+                    extractedContext = {};
+
+                    // Reset chat
+                    const chat = document.getElementById("chatContainer");
+                    chat.innerHTML = `
+                    <div class="message marcel-message">
+                        <div>🔄 Session réinitialisée! Nouvelle conversation avec Marcel.</div>
+                        <div class="message-meta">Session: ${sessionId.substring(0, 20)}...</div>
+                    </div>
+                `;
+
+                    // Reset fields
+                    initializeExpectedFields();
+                    document.getElementById("extractedFields").innerHTML = "";
+
+                    // Reset stats
+                    document.getElementById("totalTests").textContent = "0";
+                    document.getElementById("confidence").textContent = "--%";
+                    document.getElementById("avgTime").textContent = "--ms";
+                    document.getElementById("clientStatus").textContent = "--";
+
+                    updateSessionInfo();
+                }
+            }
+
+            // Autres fonctions (formation, rapport, etc.)
+            async function runFullTraining() {
+                alert("Formation complète en cours de développement...");
+            }
+
+            async function viewTrainingReport() {
+                window.open(`${API_BASE}/training-report`, "_blank");
+            }
+
+            async function analyzeContext() {
+                const text =
+                    document.getElementById("messageInput").value ||
+                    "Je veux une coupe demain matin avec Marco";
+                alert(
+                    `Analyse de: "${text}"\n\nContexte extrait: ${JSON.stringify(extractedContext, null, 2)}`,
+                );
+            }
+
+            // 📊 Charger stats initiales
+            async function loadInitialStats() {
+                try {
+                    const response = await fetch(`${API_BASE}/dev-metrics`);
+                    const metrics = await response.json();
+
+                    document.getElementById("successRate").textContent =
+                        `${metrics.successRate || 85}%`;
+                    console.log("📊 Stats initiales chargées:", metrics);
+                } catch (error) {
+                    console.log("📊 Stats par défaut chargées");
+                }
+            }
+
+            // Raccourcis clavier
+            document.addEventListener("keydown", function (e) {
+                if (e.ctrlKey && e.key === "Enter") {
+                    sendMessage();
+                } else if (e.ctrlKey && e.key === "l") {
+                    e.preventDefault();
+                    clearSession();
+                }
+            });
+
+            console.log("🚀 Marcel Trainer DEV Dashboard v2.2 prêt!");
+            console.log("💡 Raccourcis: Ctrl+Enter = Envoyer, Ctrl+L = Clear");
+        </script>
+    </body>
+</html>

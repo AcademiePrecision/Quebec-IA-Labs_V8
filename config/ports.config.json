@@ -1,0 +1,40 @@
+{
+  "development": {
+    "app_mobile": {
+      "port": 3000,
+      "description": "Application React Native - Expo Dev Server"
+    },
+    "marcel_ai": {
+      "port": 3001, 
+      "description": "Marcel AI - Serveur téléphonie IA Claude"
+    },
+    "supabase_local": {
+      "port": 54321,
+      "description": "Supabase Local Development"
+    },
+    "stripe_webhook": {
+      "port": 3002,
+      "description": "Stripe Webhooks (si local)"
+    }
+  },
+  "production": {
+    "app_mobile": {
+      "port": "dynamic",
+      "description": "Expo/EAS Build - Port dynamique"
+    },
+    "marcel_ai": {
+      "port": "replit_auto",
+      "description": "Replit auto-assigné"
+    }
+  },
+  "testing": {
+    "app_mobile": {
+      "port": 3100,
+      "description": "Tests App Mobile"
+    },
+    "marcel_ai": {
+      "port": 3101,
+      "description": "Tests Marcel AI"
+    }
+  }
+}
