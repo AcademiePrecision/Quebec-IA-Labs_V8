@@ -26,6 +26,32 @@ try {
   console.log("Warning: OpenAI SDK non disponible");
 }
 
+
+// PATCH ANTI-EMOJI POUR TELEPHONE - VERSION RENFORCÉE
+function removeAllEmojisForPhone(text) {
+  if (!text) return '';
+  
+  // Supprimer tous les vrais emojis Unicode
+  let cleaned = text.replace(/[\u{1F000}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '');
+  
+  // Supprimer les descriptions d'émojis courantes
+  const descriptions = [
+    'visage souriant', 'etoile souriante', 'main qui salue',
+    'ciseaux', 'calendrier', 'emoji', 'symbole', 'smiley',
+    '😊', '😄', '😃', '✨', '👋', '✂️', '📅', '⭐',
+    'emoji sourire', 'emoji étoile', 'emoji main', 'emoji ciseaux',
+    'sourire', 'étoile', 'main qui fait signe', 'symbole étoile'
+  ];
+  
+  descriptions.forEach(desc => {
+    const regex = new RegExp('\\b' + desc.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'gi');
+    cleaned = cleaned.replace(regex, '');
+  });
+  
+  // Nettoyer les espaces multiples et trimmer
+  return cleaned.replace(/\s+/g, ' ').trim();
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -228,12 +254,12 @@ Historique conversation: ${session.messages.slice(-4).map(m => m.role === 'user'
           messages: [
             {
               role: "user",
-              content: `Tu es Marcel, réceptionniste IA super jovial et efficace pour nos 3 salons à Québec! 😄
+              content: `Tu es Marcel, réceptionniste IA super jovial et efficace pour nos 3 salons à Québec!
 
 NOS 3 SALONS FANTASTIQUES:
-🔥 SALON TONY - Marco (expert barbe traditionnelle, 45$)
-💫 SALON GUSTAVE - Jessica (experte colorations, 55$)  
-🎨 INDEPENDENT BARBER - Alex (coupes modernes créatives, 50$)
+- SALON TONY - Marco (expert barbe traditionnelle, 45$)
+- SALON GUSTAVE - Jessica (experte colorations, 55$)  
+- INDEPENDENT BARBER - Alex (coupes modernes créatives, 50$)
 
 SERVICES ET PRIX:
 - Coupe homme: 35$ | Barbe: 20$ | Combo: 55$ | Coloration: 55$+
@@ -243,19 +269,20 @@ ${sessionContext}
 
 Client vient de dire: "${userInput}"
 
-LOGIQUE DE RÉPONSE AMÉLIORÉE - SUPER IMPORTANT:
+LOGIQUE DE RÉPONSE VOCALE - SUPER IMPORTANT:
 1. Si client reconnu: salue par nom avec enthousiasme et mentionne son salon/barbier habituel
 2. Si nouveau client: demande d'abord quel SALON l'intéresse (Tony/Gustave/Independent)
 3. Pour les RDV: demande JOUR PRÉFÉRÉ en premier (pas l'heure!)
 4. Utilise les expressions québécoises: "Salut!", "Super!", "Parfait!", "À bientôt!"
-5. Sois énergique avec des emojis mais pas trop
+5. IMPORTANT: Tu es au téléphone - JAMAIS d'emojis, symboles ou descriptions visuelles
 6. Maximum 2 phrases dynamiques et précises
 7. Ne redemande JAMAIS ce qui est déjà connu
+8. Parle naturellement comme un humain sans mentionner de symboles
 
 ORDRE LOGIQUE AMÉLIORÉ:
 Service → SALON → JOUR PRÉFÉRÉ → HEURE → Nom → Confirmation
 
-Ta réponse joviale et efficace:`,
+Ta réponse vocale naturelle et efficace:`,
             },
           ],
         }),
@@ -263,7 +290,8 @@ Ta réponse joviale et efficace:`,
       ]);
 
       console.log("Success: Réponse Claude obtenue!");
-      const response = message.content[0].text.trim();
+      const rawResponse = message.content[0].text.trim();
+      const response = removeAllEmojisForPhone(rawResponse);
       
       // Sauvegarder dans la session
       if (sessionId) {
@@ -333,7 +361,8 @@ RÈGLES ABSOLUES:
       ]);
 
       console.log("Success: Réponse OpenAI obtenue!");
-      const response = completion.choices[0].message.content.trim();
+      const rawResponse = completion.choices[0].message.content.trim();
+      const response = removeAllEmojisForPhone(rawResponse);
       
       // Sauvegarder dans la session
       if (sessionId) {
