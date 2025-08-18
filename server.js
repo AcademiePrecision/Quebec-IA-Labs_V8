@@ -13,6 +13,7 @@ const cors = require("cors");
 // Try to load AI SDKs, but continue if they fail
 let Anthropic = null;
 let OpenAI = null;
+const axios = require("axios");
 
 try {
   Anthropic = require("@anthropic-ai/sdk");
@@ -24,6 +25,47 @@ try {
   OpenAI = require("openai");
 } catch (error) {
   console.log("Warning: OpenAI SDK non disponible");
+}
+
+// ElevenLabs TTS function
+async function generateElevenLabsAudio(text) {
+  try {
+    const voiceId = process.env.ELEVENLABS_VOICE_ID_FRENCH_CA || process.env.EXPO_PUBLIC_VIBECODE_ELEVENLABS_API_KEY;
+    const apiKey = process.env.ELEVENLABS_API_KEY || process.env.XPO_PUBLIC_VIBECODE_ELEVENLABS_API_KEY;
+    
+    if (!apiKey || !voiceId) {
+      console.log("Warning: ElevenLabs non configuré, fallback vers Polly");
+      return null;
+    }
+
+    const response = await axios.post(
+      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+      {
+        text: text,
+        model_id: "eleven_multilingual_v2",
+        voice_settings: {
+          stability: 0.5,
+          similarity_boost: 0.75,
+          style: 0.0,
+          use_speaker_boost: true
+        }
+      },
+      {
+        headers: {
+          'Accept': 'audio/mpeg',
+          'Content-Type': 'application/json',
+          'xi-api-key': apiKey
+        },
+        responseType: 'arraybuffer'
+      }
+    );
+
+    console.log("✅ ElevenLabs audio généré avec succès");
+    return response.data;
+  } catch (error) {
+    console.log("Warning: ElevenLabs échec:", error.message);
+    return null;
+  }
 }
 
 
@@ -55,10 +97,65 @@ function removeAllEmojisForPhone(text) {
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Storage temporaire pour audio ElevenLabs
+const audioCache = new Map();
+
+// Helper function pour TwiML avec ElevenLabs
+async function createTwiMLWithElevenLabs(text, gatherOptions = null) {
+  const audioData = await generateElevenLabsAudio(text);
+  
+  if (audioData) {
+    // Utiliser ElevenLabs
+    const audioId = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    audioCache.set(audioId, audioData);
+    
+    const audioUrl = `https://${process.env.REPLIT_PRO_URL || 'quebec-ia-labs.replit.app'}/audio/${audioId}`;
+    
+    let twiml = `<?xml version="1.0" encoding="UTF-8"?>\n<Response>\n    <Play>${audioUrl}</Play>`;
+    
+    if (gatherOptions) {
+      twiml += `\n    <Gather input="speech" action="/webhook/twilio" method="POST" language="fr-CA" speechTimeout="3" timeout="${gatherOptions.timeout || 6}">\n    </Gather>`;
+    }
+    
+    twiml += `\n</Response>`;
+    return twiml;
+  } else {
+    // Fallback vers Polly
+    let twiml = `<?xml version="1.0" encoding="UTF-8"?>\n<Response>\n    <Say voice="Polly.Matthew-Neural" language="fr-CA">${text}</Say>`;
+    
+    if (gatherOptions) {
+      twiml += `\n    <Gather input="speech" action="/webhook/twilio" method="POST" language="fr-CA" speechTimeout="3" timeout="${gatherOptions.timeout || 6}">\n    </Gather>`;
+    }
+    
+    twiml += `\n</Response>`;
+    return twiml;
+  }
+}
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Endpoint pour servir audio ElevenLabs
+app.get("/audio/:audioId", (req, res) => {
+  const audioId = req.params.audioId;
+  const audioData = audioCache.get(audioId);
+  
+  if (!audioData) {
+    return res.status(404).send("Audio not found");
+  }
+  
+  res.set({
+    'Content-Type': 'audio/mpeg',
+    'Content-Length': audioData.length
+  });
+  
+  res.send(audioData);
+  
+  // Nettoyer après 30 secondes
+  setTimeout(() => audioCache.delete(audioId), 30000);
+});
 
 // Initialize Anthropic
 let anthropic = null;
@@ -775,15 +872,7 @@ app.post("/webhook/twilio", async (req, res) => {
         greeting = `Bonjour! Ici Marcel d'Académie Précision. À qui ai-je le plaisir de parler?`;
       }
 
-      const twiml = `<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-    <Say voice="Polly.Matthew-Neural" language="fr-CA">${greeting}</Say>
-    <Gather input="speech" action="/webhook/twilio" method="POST" language="fr-CA" speechTimeout="3" timeout="6">
-    </Gather>
-    <Say voice="Polly.Matthew-Neural" language="fr-CA">Désolé, je n'ai pas bien entendu. Rappellez-nous! Au revoir.</Say>
-    <Hangup/>
-</Response>`;
-
+      const twiml = await createTwiMLWithElevenLabs(greeting, { timeout: 6 });
       return res.type("text/xml").send(twiml);
     }
 
@@ -831,13 +920,8 @@ app.post("/webhook/twilio", async (req, res) => {
         const randomEnding = endings[Math.floor(Math.random() * endings.length)];
         
         // Terminer la conversation sans demander autre chose
-        const finalTwiml = `<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-    <Say voice="Polly.Matthew-Neural" language="fr-CA">${response}</Say>
-    <Pause length="1"/>
-    <Say voice="Polly.Matthew-Neural" language="fr-CA">${randomEnding} Au revoir!</Say>
-    <Hangup/>
-</Response>`;
+        const finalMessage = `${response}. ${randomEnding} Au revoir!`;
+        const finalTwiml = await createTwiMLWithElevenLabs(finalMessage);
         
         // Nettoyer la session
         if (sessions.has(sessionId)) {
@@ -848,26 +932,15 @@ app.post("/webhook/twilio", async (req, res) => {
       }
 
       // Continuer la conversation seulement si nécessaire
-      const continueTwiml = `<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-    <Say voice="Polly.Matthew-Neural" language="fr-CA">${response}</Say>
-    <Pause length="1"/>
-    <Gather input="speech" action="/webhook/twilio" method="POST" language="fr-CA" speechTimeout="3" timeout="5">
-    </Gather>
-    <Say voice="Polly.Matthew-Neural" language="fr-CA">Parfait! Merci de votre appel. Au revoir!</Say>
-    <Hangup/>
-</Response>`;
+      const fullResponse = `${response}. Avez-vous autre chose?`;
+      const continueTwiml = await createTwiMLWithElevenLabs(fullResponse, { timeout: 5 });
 
       return res.type("text/xml").send(continueTwiml);
     }
   } catch (error) {
     console.error("Error: Erreur webhook Twilio:", error);
 
-    const errorTwiml = `<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-    <Say voice="Polly.Matthew-Neural" language="fr-CA">Désolé, problème technique. Rappellez dans quelques minutes.</Say>
-    <Hangup/>
-</Response>`;
+    const errorTwiml = await createTwiMLWithElevenLabs("Désolé, problème technique. Rappellez dans quelques minutes.");
 
     res.type("text/xml").send(errorTwiml);
   }
