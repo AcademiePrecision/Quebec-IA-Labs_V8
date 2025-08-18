@@ -109,7 +109,7 @@ async function createTwiMLWithElevenLabs(text, gatherOptions = null) {
     const audioId = Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     audioCache.set(audioId, audioData);
     
-    const audioUrl = `https://${process.env.REPLIT_PRO_URL || 'quebec-ia-labs.replit.app'}/audio/${audioId}`;
+    const audioUrl = `https://Quebec-IA-Labs.replit.app/audio/${audioId}`;
     
     let twiml = `<?xml version="1.0" encoding="UTF-8"?>\n<Response>\n    <Play>${audioUrl}</Play>`;
     
