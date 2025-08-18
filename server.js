@@ -575,7 +575,7 @@ app.get("/", (req, res) => {
         <div style="margin-top: 30px; background: rgba(40, 167, 69, 0.2); padding: 20px; border-radius: 10px;">
           <h3>Corrections Apportées:</h3>
           <ul style="text-align: left; max-width: 400px; margin: 0 auto;">
-            <li>Voix masculine: Polly.Liam-Neural</li>
+            <li>Voix masculine: Polly.Justin-Neural</li>
             <li>Gestion mémoire de conversation</li>
             <li>Logique anti-boucle intelligente</li>
             <li>Conclusion automatique quand tout est noté</li>
@@ -777,10 +777,10 @@ app.post("/webhook/twilio", async (req, res) => {
 
       const twiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Say voice="Polly.Liam-Neural" language="fr-CA">${greeting}</Say>
+    <Say voice="Polly.Justin-Neural" language="fr-CA">${greeting}</Say>
     <Gather input="speech" action="/webhook/twilio" method="POST" language="fr-CA" speechTimeout="3" timeout="6">
     </Gather>
-    <Say voice="Polly.Liam-Neural" language="fr-CA">Désolé, je n'ai pas bien entendu. Rappellez-nous! Au revoir.</Say>
+    <Say voice="Polly.Justin-Neural" language="fr-CA">Désolé, je n'ai pas bien entendu. Rappellez-nous! Au revoir.</Say>
     <Hangup/>
 </Response>`;
 
@@ -833,9 +833,9 @@ app.post("/webhook/twilio", async (req, res) => {
         // Terminer la conversation sans demander autre chose
         const finalTwiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Say voice="Polly.Liam-Neural" language="fr-CA">${response}</Say>
+    <Say voice="Polly.Justin-Neural" language="fr-CA">${response}</Say>
     <Pause length="1"/>
-    <Say voice="Polly.Liam-Neural" language="fr-CA">${randomEnding} Au revoir!</Say>
+    <Say voice="Polly.Justin-Neural" language="fr-CA">${randomEnding} Au revoir!</Say>
     <Hangup/>
 </Response>`;
         
@@ -850,11 +850,11 @@ app.post("/webhook/twilio", async (req, res) => {
       // Continuer la conversation seulement si nécessaire
       const continueTwiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Say voice="Polly.Liam-Neural" language="fr-CA">${response}</Say>
+    <Say voice="Polly.Justin-Neural" language="fr-CA">${response}</Say>
     <Pause length="1"/>
     <Gather input="speech" action="/webhook/twilio" method="POST" language="fr-CA" speechTimeout="3" timeout="5">
     </Gather>
-    <Say voice="Polly.Liam-Neural" language="fr-CA">Parfait! Merci de votre appel. Au revoir!</Say>
+    <Say voice="Polly.Justin-Neural" language="fr-CA">Parfait! Merci de votre appel. Au revoir!</Say>
     <Hangup/>
 </Response>`;
 
@@ -865,7 +865,7 @@ app.post("/webhook/twilio", async (req, res) => {
 
     const errorTwiml = `<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Say voice="Polly.Liam-Neural" language="fr-CA">Désolé, problème technique. Rappellez dans quelques minutes.</Say>
+    <Say voice="Polly.Justin-Neural" language="fr-CA">Désolé, problème technique. Rappellez dans quelques minutes.</Say>
     <Hangup/>
 </Response>`;
 
@@ -881,7 +881,7 @@ app.get("/webhook/twilio/test", (req, res) => {
     timestamp: new Date().toISOString(),
     message: "Webhook Twilio fonctionnel - Version Finale Corrigée!",
     fixes: [
-      "Voix masculine (Polly.Liam-Neural)",
+      "Voix masculine (Polly.Justin-Neural)",
       "Anti-boucle intelligent", 
       "Mémoire de conversation",
       "Conclusion automatique"
@@ -927,7 +927,7 @@ app.get("/health", (req, res) => {
     claude: anthropic ? "connected" : "fallback",
     sessions: sessions.size,
     fixes: [
-      "Voice: Polly.Liam-Neural (masculine)",
+      "Voice: Polly.Justin-Neural (masculine)",
       "Anti-loop logic implemented",
       "Session memory active",
       "Auto-conclusion enabled"
