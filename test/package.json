@@ -1,0 +1,12 @@
+{
+  "name": "marcel-tests",
+  "version": "1.0.0",
+  "description": "Tests Marcel IA Twilio",
+  "scripts": {
+    "test": "node marcel-test.js",
+    "fix": "node fix-marcel.js",
+    "validate": "npm run fix && npm run test"
+  },
+  "author": "Franky & Claude",
+  "dependencies": {}
+}

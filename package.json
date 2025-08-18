@@ -2,10 +2,10 @@
   "name": "marcel-v8-ultimate-replit",
   "version": "8.0.0",
   "description": "🧠 Marcel V8.0 Ultimate - Quebec IA Labs Production avec Claude",
-  "main": "replit-server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node replit-server.js",
-    "dev": "node replit-server.js",
+    "start": "node server.js",
+    "dev": "node server.js",
     
     "sync": "node ../scripts/sync-to-github.js && echo '🚀 Sync completed: Local → GitHub → Replit Dev'",
     "deploy:prod": "node ../scripts/deploy-to-replit.js prod",
@@ -30,8 +30,8 @@
     "node": ">=18.0.0"
   },
   "replit": {
-    "entrypoint": "replit-server.js",
-    "language": "nodejs",
-    "run": "node replit-server.js"
+    "entrypoint": "server.js",
+    "language": "nodejs", 
+    "run": "node server.js"
   }
 }
